@@ -7,6 +7,12 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
-    "gridsome": "^0.7.0"
+    "gridsome": "^0.7.0",
+    "normalize.css": "^8.0.1"
+  },
+  "devDependencies": {
+    "style-resources-loader": "^1.4.1",
+    "stylus": "^0.54.8",
+    "stylus-loader": "^3.0.2"
   }
 }
