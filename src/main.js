@@ -4,8 +4,10 @@
 import 'normalize.css' // Remove if using a css framework, those already normalize styles
 import '~/assets/styl/global.styl'
 import DefaultLayout from '~/layouts/Default.vue'
+import OffClickDirective from '~/OffClickDirective'
 
 export default function (Vue, { router, head, isClient }) {
   // Set default layout as a global component
   Vue.component('Layout', DefaultLayout)
+  Vue.directive('offClick', OffClickDirective)
 }
