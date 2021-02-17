@@ -1,0 +1,84 @@
+@import 'fonts'
+/*  Not importing vars and mixins since
+    gridsome.config.js already does that for us */
+
+*
+  box-sizing border-box
+
+html
+  color $defaultTextColor
+  font-weight $medium
+  font-size unit($baseFontSize, 'px')
+
+  @media screen and (max-width: 768px)
+    font-size 14.5px
+
+  @media screen and (max-width: 480px)
+    font-size 13px
+
+body
+  color inherit
+  font-family inherit
+  font-weight inherit
+  font-size inherit
+
+input, button, textarea
+  font-family inherit
+
+a
+  &, &:focus, &:hover, &:active
+    text-decoration none
+
+h1, h2, h3, h4
+  margin 0
+
+p
+  margin-top 0
+
+label.error
+  color $errorColor
+  display block
+  padding-top 0.3em
+
+.form-message
+  i, span
+    display inline-block
+
+  span
+    margin-left 0.5em
+
+  &.error
+    color $errorColor
+
+  &.success
+    color $successColor
+
+  &.succes, &.error
+    margin-top 1em
+
+.input-wrapper
+  display block
+  text-align left
+  width 100%
+
+  input, textarea
+    line-height 1
+    width 100%
+
+.site-button
+  cursor pointer
+  border-radius 5px
+  font-weight $heavy
+  color $inverseTextColor
+  border none
+  line-height 1
+  padding 1.2em 2.8em
+
+textarea
+  resize none
+
+@media screen and (max-width: 480px)
+  .input-wrapper
+    text-align center
+
+@import 'utils'
