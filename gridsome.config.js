@@ -4,7 +4,8 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-const path = require('path')
+const path = require('path');
+const poststylus = require('poststylus');
 
 function addStyleResource (rule) {
   rule.use('style-resource')
@@ -24,7 +25,8 @@ module.exports = {
     loaderOptions: {
       stylus: {
         test: /\.styl$/,
-        loader: 'stylus-loader'
+        loader: 'stylus-loader',
+        use: [poststylus(['autoprefixer'])]
       }
     }
   },
