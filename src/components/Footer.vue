@@ -13,14 +13,29 @@
         <a href="#" class="site-footer__link-item">Footer link item</a>
       </div>
       <div class="site-footer__social">
-        <a href="#" target="_blank" class="site-footer__social-item">Facebook link</a>
-        <a href="#" target="_blank" class="site-footer__social-item">Instagram link</a>
-        <a href="#" target="_blank" class="site-footer__social-item">Twitter link</a>
+        <a href="#" target="_blank" class="site-footer__social-item" title="Link to Facebook page">
+          <font-awesome-icon :icon="['fab', 'facebook-f']" />
+        </a>
+        <a href="#" target="_blank" class="site-footer__social-item" title="Link to Instagram profile">
+          <font-awesome-icon :icon="['fab', 'instagram']" />
+        </a>
+        <a href="#" target="_blank" class="site-footer__social-item" title="Link to Twitter profile">
+          <font-awesome-icon :icon="['fab', 'twitter']" />
+        </a>
       </div>
       <div class="site-footer__contact">
-        <a href="callto:" class="site-footer__link-item">+0 0000000</a>
-        <a href="callto:" class="site-footer__link-item">+0 0000000</a>
-        <a href="mailto:" class="site-footer__link-item">hello@test.test</a>
+        <a href="callto:" class="site-footer__link-item">
+          <font-awesome-icon icon="phone-alt" />
+          +0 0000000
+        </a>
+        <a href="callto:" class="site-footer__link-item">
+          <font-awesome-icon icon="phone-alt" />
+          +0 0000000
+        </a>
+        <a href="mailto:" class="site-footer__link-item">
+          <font-awesome-icon icon="envelope" />
+          hello@test.test
+        </a>
       </div>
     <address class="site-footer__address">Company Address</address>
   </footer>
@@ -47,13 +62,6 @@ export default {
   text-align center
   font-size remify(18)
 
-  a
-    color white
-    transition opacity 0.2s
-
-    &:hover
-      opacity 0.8
-
 .site-footer__logo
   grid-area logo
   justify-self center
@@ -63,8 +71,13 @@ export default {
     width remify(155)
 
 .site-footer__link-item
+  color white
   display block
   line-height 1.96
+  transition opacity 0.2s
+
+  &:hover
+    opacity 0.8
 
 .site-footer__links
   grid-area links
@@ -74,11 +87,19 @@ export default {
   align-self center
 
 .site-footer__social-item
+  background-color transparent
+  color white
   display inline-block
+  line-height 2.1em
   height remify(40)
   width remify(40)
-  simple-border('all', 1px, white)
   margin 0 remify(6)
+  transition background-color 0.2s
+  simple-border('all', 1px, white)
+
+  &:hover
+    background-color white
+    color $primaryThemeColor
 
 .site-footer__contact
   grid-area contact

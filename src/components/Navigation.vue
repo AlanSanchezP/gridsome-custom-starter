@@ -5,7 +5,10 @@
           alt="Logo accessibility description" 
           title="Logo"/>
       </g-link>
-      <button type="button" class="navigation-bar__menu-trigger" @click="showMenu" ref="menuTrigger">Display menu</button>
+      <button type="button" class="navigation-bar__menu-trigger" @click="showMenu" ref="menuTrigger">
+        <font-awesome-icon icon="bars"/>
+        <span>Display menu</span>
+      </button>
       <div class="navigation-bar__menu-container" v-bind:class="{'navigation-bar__menu-container--visible': showSidebarMenu}"  v-offClick="offClickHandler">
         <g-link class="navigation-bar__hamburger-logo" to="/" @click="closeMenu">
           <g-image src="~/assets/img/logo/logo-full-white.png" 
@@ -184,15 +187,21 @@ $hamburgerShadowColor = $defaultTextColor
     opacity 0
 
 .navigation-bar__menu-trigger
-  background $activeLinkAccent
+  background transparent
   border none
   display none
-  float right
   margin 18px 0
   height 20px
   width 20px
-  font-size 0
+  line-height 1.5em
+  padding 0
   outline none
+
+  .svg-inline--fa
+    color $activeLinkAccent
+
+  span
+    font-size 0
   
 .navigation-bar__menu-container
   flex-grow 1
