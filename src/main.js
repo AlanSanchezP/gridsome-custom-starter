@@ -1,6 +1,7 @@
 // This is the main.js file. Import global CSS and scripts here.
 // The Client API can be used here. Learn more: gridsome.org/docs/client-api
-import 'normalize.css' // Remove if using a css framework, those already normalize styles
+import 'normalize.css' // TODO: Remove if using a css framework, those already normalize styles
+import 'swiper/css/swiper.min.css'; // TODO: Replace with minimal styles when upgrading to Swiper 6
 import {library} from '@fortawesome/fontawesome-svg-core';
 import { faBars, faPhoneAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';

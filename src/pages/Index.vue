@@ -1,8 +1,8 @@
 <template>
 <Layout>
-  <div class="home-carousel">
+  <Swiper class="home-carousel" ref="mySwiper" :options="swiperOptions">
     <!-- TODO: Implement a carousel here -->
-    <article class="home-carousel-item vertical-center cover">
+    <SwiperSlide class="home-carousel-item vertical-center cover">
       <div class="home-carousel-item__div" data-enllax-type="foreground" data-enllax-ratio=".5">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Laborum praesentium quidem nisi!</h2>
@@ -12,8 +12,8 @@
           <a href="#" class="site-button site-button--transparent-inverse">Laudantium possimus</a>
         </div>
       </div>
-    </article>
-    <article class="home-carousel-item vertical-center cover">
+    </SwiperSlide>
+    <SwiperSlide class="home-carousel-item vertical-center cover">
       <div class="home-carousel-item__div" data-enllax-type="foreground" data-enllax-ratio=".5">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Aipisicing elit, tenetur laborum ex</h2>
@@ -23,8 +23,10 @@
           <a href="#" class="site-button site-button--transparent-inverse">Officia rerum</a>
         </div>
       </div>
-    </article>
-  </div>
+    </SwiperSlide>
+    <button type="button" class="swiper-button-next" slot="button-next" />
+    <button type="button" class="swiper-button-prev" slot="button-prev" />
+  </Swiper>
 <div class="home-introduction">
   <p class="home-introduction__text">
     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias iste et reiciendis cumque! Officiis voluptas, necessitatibus neque beatae tempore officia mollitia atque possimus in minus cumque. Ea obcaecati atque repellendus.
@@ -116,10 +118,31 @@
 
 <script>
 import '~/assets/styl/content_collection.styl';
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 
 export default {
   metaInfo: {
     title: 'Welcome to my project'
+  },
+  components: {
+    Swiper,
+    SwiperSlide
+  },
+  data() {
+    return {
+      swiperOptions: {
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        },
+        loop: true
+      }
+    }
+  },
+  computed: {
+    swiper() {
+      return this.$refs.mySwiper.$swiper;
+    }
   }
 }
 </script>
@@ -133,6 +156,26 @@ export default {
 
   @media screen and (orientation: portrait) and (min-height: 400px) and (min-width: 400px)
     max-height 76vw
+
+  .swiper-button-next,
+  .swiper-button-prev
+    background none
+    border none
+    color white
+    outline none
+    position absolute
+    text-shadow 0 0 10px $defaultTextColor
+    top 50%
+    transform translateY(-50%)
+
+    &::after
+      font-size remify(34)
+
+  .swiper-button-prev
+    left remify(14)
+
+  .swiper-button-next
+    right remify(14)
 
   &-item
     display flex
@@ -161,6 +204,12 @@ export default {
   .site-button
     font-size remify(18)
     padding 0.8em 1.2em
+
+.agile__slide
+  transition opacity 0.2
+
+  &:not(.agile__slide--active)
+    opacity 0
 
 .home-introduction
   margin-top unit(89/18, 'em')
