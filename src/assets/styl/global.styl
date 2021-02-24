@@ -68,11 +68,41 @@ label.error
 .site-button
   cursor pointer
   border-radius 5px
+  display inline-block
   font-weight $heavy
-  color $inverseTextColor
   border none
   line-height 1
   padding 1.2em 2.8em
+  transition background-color 0.2s, border-color 0.2s, color 0.2s
+  simple-border('all', 2px, transparent)
+
+  &--default
+    background-color $primaryThemeColor
+    border-color $primaryThemeColor
+    color $inverseTextColor
+
+    &:hover, &:active
+      background-color darken($primaryThemeColor, 20%)
+      border-color darken($primaryThemeColor, 20%)
+
+  &--transparent
+    background-color transparent
+    border-color $primaryThemeColor
+    color $primaryThemeColor
+
+    &:hover, &:active
+      background-color $primaryThemeColor
+      color $inverseTextColor
+
+  &--transparent-inverse
+    background-color transparent
+    color $inverseTextColor
+    border-color $inverseTextColor
+
+    &:hover, &:active
+      background-color $inverseTextColor
+      color $primaryThemeColor
+
 
 textarea
   resize none

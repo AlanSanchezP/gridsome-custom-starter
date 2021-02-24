@@ -1,8 +1,11 @@
 /* THIS FILE IS AUTOMATICALLY IMPORTED TO Vue files */
 
-.cover
+:not(img).cover
   background-position center
   background-size cover
+
+img.cover
+  object-fit cover
 
 .fake-cover
   position fixed
@@ -24,6 +27,7 @@
 
 .circle
   border-radius 50%
+  shape-outside circle(100%)
 
 .embed-responsive
   position relative

@@ -1,0 +1,46 @@
+.content-collection
+  display flex
+  align-items flex-start
+  justify-content space-around
+  flex-wrap wrap
+  center-block()
+
+  &-item
+    background $lightShadowColor
+    color $defaultTextColor
+    max-width 363px
+    flex-basis 100%
+    margin-top remify(71)
+
+    & > a
+      color inherit
+
+    &__title
+      font-size remify(22)
+      padding 0.5em 0.4em
+      font-weight $medium
+      text-align center
+
+    &__photo
+      height 266px
+      width 100%
+
+    &__info
+      position relative
+      text-align left
+
+    &__avatar
+      float left
+      height 88px
+      margin-left 0.8em
+      margin-right 1.6em
+      margin-top -2.6em
+      width 88px
+      shape-outside circle(50% at top)
+      simple-border('all', 3px, $lightShadowColor)
+
+    &__excerpt
+      font-weight $light
+      font-size remify(16)
+      margin 1.2em
+      margin-top 0.6em
