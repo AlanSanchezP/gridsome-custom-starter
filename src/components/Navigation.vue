@@ -18,6 +18,7 @@
         <nav class="navigation-bar__menu" ref="menu">
           <g-link to="/" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active" exact>Home</g-link>
           <g-link to="/about" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active" exact>About</g-link>
+          <g-link to="/contact" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active" exact>Contact</g-link>
         </nav>
       </div>
     </header>

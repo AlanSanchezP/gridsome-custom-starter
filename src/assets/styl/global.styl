@@ -35,6 +35,12 @@ h1, h2, h3, h4
 p
   margin-top 0
 
+.page-title
+  color $primaryThemeColor
+  font-weight $heavy
+  font-size remify(36)
+  margin 0
+
 label.error
   color $errorColor
   display block
@@ -58,7 +64,7 @@ label.error
 
 .input-wrapper
   display block
-  text-align left
+  text-align center
   width 100%
 
   input, textarea
@@ -103,12 +109,11 @@ label.error
       background-color $inverseTextColor
       color $primaryThemeColor
 
-
 textarea
   resize none
 
-@media screen and (max-width: 480px)
+@media screen and (min-width: 481px)
   .input-wrapper
-    text-align center
+    text-align left
 
 @import 'utils'
