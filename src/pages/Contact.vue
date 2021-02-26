@@ -16,7 +16,13 @@
         <div class="form-item__message" v-if="!$v.message.maxLength">Message should be less than {{$v.message.$params.maxLength.max}} characters.</div>
       </div>
       <div class="form-submit">
-        <button class="site-button site-button--default" type="submit" name="submit">Submit</button>
+        <font-awesome-icon v-if="submitStatus == -1" icon="circle-notch" spin class="form-submit__spinner" />
+        <div v-if="submitStatus == 0" class="form-submit__message form-submit__message--error">{{submitError}}</div>
+        <button v-if="submitStatus != -1 && submitStatus != 1" 
+          class="site-button site-button--default" type="submit" name="submit">Submit</button>
+        <div v-if="submitStatus == 1" class="form-submit__message form-submit__message--success">
+          <font-awesome-icon icon="check"/> Your message was sent successfully.
+        </div>
       </div>
     </form>
   </Layout>
@@ -40,7 +46,8 @@ export default {
       name: '',
       email: '',
       message: '',
-      submitStatus: null
+      submitStatus: null,
+      submitError: ''
     }
   },
   validations: {
@@ -53,8 +60,18 @@ export default {
   methods: {
     submit() {
       this.$v.$touch();
-      this.submitStatus = !this.$v.$error;
-      // TODO: Handle actual submission here
+      if (this.$v.$invalid) {
+        this.submitStatus = 0;
+        this.submitError = 'Your data has some errors.'
+      } else {
+        this.submitStatus = -1;
+        this.submitError = '';
+        setTimeout(() => {
+          this.submitStatus = 1;
+        }, 1000);
+      }
+      
+      // TODO: Handle actual submission here. submitError should be a useful message from server.
     }
   }
 }
@@ -97,6 +114,15 @@ export default {
 
 .form-submit
   margin-top remify(25)
+
+  &__message--error
+    margin-bottom remify(25)
+  
+  &__message--success
+    font-size remify(22)
+  
+  &__spinner
+    font-size remify(30)
 
 .site-button
   font-size remify(16)
