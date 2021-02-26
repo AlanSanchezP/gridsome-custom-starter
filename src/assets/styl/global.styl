@@ -41,43 +41,60 @@ p
   font-size remify(36)
   margin 0
 
+// TODO: Handle labels properly
 label.error
   color $errorColor
   display block
   padding-top 0.3em
 
 .form-message
-  i, span
-    display inline-block
+  display block
+  margin-top 1em
 
-  span
-    margin-left 0.5em
-
-  &.error
+  &--error
     color $errorColor
 
-  &.success
+  &--success
     color $successColor
 
-  &.succes, &.error
-    margin-top 1em
-
-.input-wrapper
+.form-item
   display block
   text-align center
   width 100%
 
-  input, textarea
+  &__input
     line-height 1
     width 100%
+
+    ../--error &
+      border-color $errorColor !important
+    
+    ../--success &
+      border-color $successColor !important
+  
+  &__message
+    text-align left
+    margin-top 0.25em
+
+    ../--error &
+      color $errorColor
+
+.form-submit
+  &__message
+    text-align center
+
+    &--error
+      color $errorColor
+    &--success
+      color $successColor
 
 .site-button
   cursor pointer
   border-radius 5px
   display inline-block
   font-weight $heavy
-  border none
   line-height 1
+  outline none
   padding 1.2em 2.8em
   transition background-color 0.2s, border-color 0.2s, color 0.2s
   simple-border('all', 2px, transparent)
