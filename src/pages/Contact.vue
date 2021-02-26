@@ -79,26 +79,26 @@ export default {
 
 <style lang="stylus" scoped>
 .contact-form-page
-  padding-bottom remify(120)
-  padding-top remify(62)
+  padding-bottom remify(98)
+  padding-top remify(48)
   text-align center
 
 .contact-form
   margin-top remify(50)
-  center-block()
   max-width 436px
   width 90%
+  center-block()
 
 .form-item
-  margin-top remify(14)
-  font-size remify(17)
+  margin-top remify(12)
+  font-size remify(16)
 
   &__input
     color $inputTextColor
     font-weight $bold
-    font-size 16px // TODO: Find a good way to resize fonts. Small fonts on mobile look bad
+    font-size inherit
     padding 1em 2em
-    simple-border('all', 0.5px, $lightShadowColor)
+    simple-border('all', remify(0.5), $lightShadowColor)
 
     &, &:hover, &:active &:focus
       box-shadow none
@@ -113,16 +113,16 @@ export default {
       height 180px
 
 .form-submit
-  margin-top remify(25)
+  margin-top remify(20)
 
   &__message--error
-    margin-bottom remify(25)
+    margin-bottom remify(20)
   
   &__message--success
-    font-size remify(22)
+    font-size remify(19)
   
   &__spinner
-    font-size remify(30)
+    font-size remify(32)
 
 .site-button
   font-size remify(16)
@@ -133,4 +133,9 @@ export default {
 
   .form-submit
     text-align right
+
+@media screen and (min-width: $bigScreenAt)
+  .contact-form
+    max-width initial
+    width 50%
 </style>

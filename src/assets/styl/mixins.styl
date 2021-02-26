@@ -5,7 +5,7 @@ center-block()
   margin-right auto
 
 remify(pxsize)
-  return unit(pxsize / $baseFontSize, 'rem')
+  return unit(pxsize / $minRootFontSize, 'rem')
 
 simple-border(side, width, colour, style = solid)
   if side == 'top'

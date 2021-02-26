@@ -58,9 +58,9 @@ export default {
   grid-row-gap remify(40)
   background $primaryThemeColor
   color white
-  padding remify(60) 5vw remify(65) 5vw
+  padding remify(54) 5vw remify(58) 5vw
   text-align center
-  font-size remify(18)
+  font-size remify(16)
 
 .site-footer__logo
   grid-area logo
@@ -68,7 +68,7 @@ export default {
   width auto
 
   img
-    width remify(155)
+    width remify(140)
 
 .site-footer__link-item
   color white
@@ -91,11 +91,11 @@ export default {
   color white
   display inline-block
   line-height 2.1em
-  height remify(40)
-  width remify(40)
-  margin 0 remify(6)
+  height remify(35)
+  width remify(35)
+  margin 0 remify(5)
   transition background-color 0.2s
-  simple-border('all', 1px, white)
+  simple-border('all', remify(1), white)
 
   &:hover
     background-color white
@@ -132,4 +132,15 @@ export default {
 
   .site-footer__link-item
     line-height 1.47
+
+@media screen and (min-width: 1200px)
+  .site-footer
+    padding-left 15vw
+    padding-right 15vw
+
+@media screen and (min-width: $bigScreenAt)
+  .site-footer
+    grid-template-columns 21vw 1fr 21vw
+    padding-left 5vw
+    padding-right 5vw
 </style>

@@ -164,18 +164,18 @@ export default {
     color white
     outline none
     position absolute
-    text-shadow 0 0 10px $defaultTextColor
+    text-shadow 0 0 remify(10) $defaultTextColor
     top 50%
     transform translateY(-50%)
 
     &::after
-      font-size remify(34)
+      font-size remify(30)
 
   .swiper-button-prev
-    left remify(14)
+    left remify(12)
 
   .swiper-button-next
-    right remify(14)
+    right remify(12)
 
   &-item
     display flex
@@ -190,19 +190,18 @@ export default {
       z-index 2
 
     &__content
-      max-width 344px
+      max-width "max(344px, 40vw)" % null
 
     &__title
-      font-size remify(39)
+      font-size remify(35)
 
     &__text
-      font-size remify(18)
       line-height 1.17
       padding-bottom unit(38/18, 'em')
       margin-top unit(19/18, 'em')
 
   .site-button
-    font-size remify(18)
+    font-size remify(16)
     padding 0.8em 1.2em
 
 .agile__slide
@@ -216,7 +215,6 @@ export default {
   margin-bottom unit(127/18, 'em')
   max-width 655px
   text-align center
-  font-size remify(18)
   width 90%
   center-block()
 
@@ -225,7 +223,7 @@ export default {
     padding-bottom unit(39/18, 'em')
 
   .site-button
-    font-size remify(17)
+    font-size remify(16)
     padding 1em 1.5em
 
 .home-gradient
@@ -233,14 +231,14 @@ export default {
 
   &--logo-section
     position relative
-    padding remify(90) 0 remify(74) 0
+    padding remify(90) 0 remify(60) 0
 
   &-logo
     position absolute
     left 50%
     top 0
     transform translate(-50%, -38%)
-    width remify(110)
+    width remify(96)
     z-index 3
 
   &__items
@@ -260,13 +258,14 @@ export default {
     max-width initial
 
     &:nth-child(n + 3)
-      margin-top remify(50)
+      margin-top remify(42)
 
     img
-      height remify(38)
+      height remify(70)
+      width @height
 
     p
-      font-size remify(14)
+      font-size remify(15.5)
       margin-top unit(23/14, 'em')
 
     @media screen and (min-width: 731px)
@@ -277,23 +276,43 @@ export default {
         margin-top initial
 
 .starred-content
-  center-block()
-  text-align center
   max-width 880px
+  padding remify(60) 0 remify(86) 0
+  text-align center
   width 90%
-  padding remify(70) 0 remify(105) 0
+  center-block()
 
   &__title
-    font-size remify(22)
+    font-size remify(20)
     padding-bottom unit(33/22, 'em')
 
   &__description
-    font-size remify(18)
     width 100%
     max-width 655px
     line-height 1.17
     center-block()
 
   .site-button
+    font-size remify(15.5)
     margin-top 4em
+
+@media screen and (min-width: $bigScreenAt)
+  .home-introduction
+    max-width initial
+    width 70%
+
+  .home-gradient
+    &__items
+      max-width initial
+
+    &__item
+      max-width initial
+
+  .starred-content
+    max-width initial
+    width 88%
+
+    &__description
+      max-width initial
+      width 88%
 </style>

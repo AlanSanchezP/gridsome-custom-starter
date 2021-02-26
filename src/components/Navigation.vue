@@ -130,8 +130,8 @@ export default {
 
 <style lang="stylus">
 $thinNavbarHeight = 56px
-$bigScreenBreakpoint = 968px
-$bigScreenNavbarHeight = 78px
+$desktopScreenBreakpoint = 968px
+$desktopScreenNavbarHeight = 78px
 
 // TODO: Find a better way to handle this marginm-top
 
@@ -140,8 +140,8 @@ body.noscroll
 
 #main-content
   margin-top $thinNavbarHeight
-  @media screen and (min-width: $bigScreenBreakpoint)
-    margin-top $bigScreenNavbarHeight
+  @media screen and (min-width: $desktopScreenBreakpoint)
+    margin-top $desktopScreenNavbarHeight
 </style>
 
 <style lang="stylus" scoped>
@@ -149,18 +149,18 @@ body.noscroll
     This might throw an error if those variables do not exist.
  */
 $thinNavbarHeight = 56px
-$bigScreenBreakpoint = 968px
-$bigScreenNavbarHeight = 78px
+$desktopScreenBreakpoint = 968px
+$desktopScreenNavbarHeight = 78px
 $navbarBg = white
 $navbarZindex = 12
 $hamburgerZindex = 16
 
 // Not-hamburger
-$activeLinkBorderHeight = 4px
+$activeLinkBorderHeight = remify(4)
 $activeLinkAccent = $primaryThemeColor
 $linkColor = $defaultTextColor
 // Hamburger
-$activeLinkBorderWidth = 4px
+$activeLinkBorderWidth = remify(4)
 $hamburgerBg = $activeLinkAccent
 $hamburgerLinkColor = white
 $hamburgerLinkBg = lightness($hamburgerBg, 30%)
@@ -182,7 +182,7 @@ $hamburgerShadowColor = $defaultTextColor
   top 0
   width 100%
   z-index $navbarZindex
-  simple-border('bottom', 1px, $lightShadowColor)
+  simple-border('bottom', remify(1), $lightShadowColor)
 
   &.performing-responsive-evaluation .navigation-bar__menu-container
     opacity 0
@@ -230,7 +230,7 @@ $hamburgerShadowColor = $defaultTextColor
   .navigation-bar__menu-link
     color $linkColor
     display inline-block
-    font-size remify(16)
+    font-size 1rem
     simple-border('bottom', $activeLinkBorderHeight, transparent)
     padding 0 0.7em
 
@@ -269,7 +269,7 @@ $hamburgerShadowColor = $defaultTextColor
   .navigation-bar__menu-link
     color $hamburgerLinkColor
     display block
-    font-size remify(18)
+    font-size remify(16)
     line-height 1
     padding 1em 2em
     simple-border('left', $activeLinkBorderWidth, transparent)
@@ -278,14 +278,29 @@ $hamburgerShadowColor = $defaultTextColor
       background-color $hamburgerLinkBg
       simple-border('left', $activeLinkBorderWidth, $hamburgerActiveLinkAccent)
 
-@media screen and (min-width: $bigScreenBreakpoint)
+@media screen and (min-width: $desktopScreenBreakpoint)
   .navigation-bar
     justify-content initial
-    height $bigScreenNavbarHeight
-    padding 0 remify(40)
+    height $desktopScreenNavbarHeight
+    padding 0 remify(34)
 
-  .navigation-bar__menu-link
-    font-size remify(18)
-    line-height $bigScreenNavbarHeight - $activeLinkBorderHeight
-    padding 0 0.7em
+    &:not(.navigation-bar--use-hamburger) .navigation-bar__menu-link
+      font-size remify(16)
+      line-height $desktopScreenNavbarHeight - $activeLinkBorderHeight
+      padding 0 0.7em
+
+
+@media screen and (min-width: $bigScreenAt)
+  .navigation-bar
+    height min(remify(50), 10vh)
+
+    &:not(.navigation-bar--use-hamburger) .navigation-bar__menu-link
+      font-size remify(16)
+      height 100%
+      line-height min(remify(40), 9vh)
+  
+    &__menu-container,
+    &__menu
+      height 100%
+
 </style>

@@ -8,13 +8,13 @@
 html
   color $defaultTextColor
   font-weight $medium
-  font-size unit($baseFontSize, 'px')
+  font-size clamp(
+    unit($minRootFontSize, 'px'), // Min
+    calc((2px + 2.6vw + 2.6vh) / 3), // Preferred
+    unit($maxRootFontSize, 'px')) // Max
 
-  @media screen and (max-width: 768px)
-    font-size 14.5px
-
-  @media screen and (max-width: 480px)
-    font-size 13px
+  @media screen and (min-width: $bigScreenAt)
+    font-size calc(0.88vw + 0.88vh)
 
 body
   color inherit
@@ -23,7 +23,7 @@ body
   font-size inherit
 
 input, button, textarea
-  font-family inherit
+  font-family inherit // TODO: REMOVE
 
 a
   &, &:focus, &:hover, &:active
@@ -33,12 +33,13 @@ h1, h2, h3, h4
   margin 0
 
 p
+  font-size 1.25rem
   margin-top 0
 
 .page-title
   color $primaryThemeColor
   font-weight $heavy
-  font-size remify(36)
+  font-size remify(32)
   margin 0
 
 // TODO: Handle labels properly
@@ -91,17 +92,19 @@ label.error
 
   &__spinner
     color $primaryThemeColor
+    display block
+    center-block()
 
 .site-button
   cursor pointer
-  border-radius 5px
+  border-radius remify(5)
   display inline-block
   font-weight $heavy
   line-height 1
   outline none
   padding 1.2em 2.8em
   transition background-color 0.2s, border-color 0.2s, color 0.2s
-  simple-border('all', 2px, transparent)
+  simple-border('all', remify(2), transparent)
 
   &--default
     background-color $primaryThemeColor
