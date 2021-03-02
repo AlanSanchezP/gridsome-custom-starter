@@ -75,40 +75,22 @@
   </p>
   <div class="content-collection">
     <article class="content-collection-item">
-      <a href="#">
-        <h3 class="content-collection-item__title">Esse inventore, eveniet eligendi</h3>
-        <g-image src="~/assets/img/logo/logo.png" 
-          class="content-collection-item__photo cover"
-          alt="Avatar picture"
-          title="Avatar picture" aria-hidden="true" />
-        <div class="content-collection-item__info">
-          <g-image src="~/assets/img/logo/logo.png" 
-            class="content-collection-item__avatar circle"
-            alt="Avatar picture"
-            title="Avatar picture" aria-hidden="true" />
-          <p class="content-collection-item__excerpt">
-            Porro praesentium earum sed ipsam? Assumenda, deserunt amet! Suscipit doloribus velit quae laudantium tempore. Aperiam consectetur eos repudiandae sint incidunt illum dolores.
-          </p>
-        </div>
-      </a>
+      <g-image src="~/assets/img/logo/logo.png" 
+        class="content-collection-item__thumbnail cover"
+        alt="Thumbnail picture"
+        title="Thumbnail picture" aria-hidden="true" />
+      <div class="content-collection-item__title vertical-center">
+        <span class="content-collection-item__title-span">Esse inventore, eveniet eligendi</span>
+      </div>
     </article>
     <article class="content-collection-item">
-      <a href="#">
-        <h3 class="content-collection-item__title">Doloremque ipsam cumque voluptatum</h3>
-        <g-image src="~/assets/img/logo/logo.png" 
-          class="content-collection-item__photo cover"
-          alt="Avatar picture"
-          title="Avatar picture" aria-hidden="true" />
-        <div class="content-collection-item__info">
-          <g-image src="~/assets/img/logo/logo.png" 
-            class="content-collection-item__avatar circle"
-            alt="Avatar picture"
-            title="Avatar picture" aria-hidden="true" />
-          <p class="content-collection-item__excerpt">
-            In necessitatibus praesentium totam accusantium fugiat quis, qui deleniti kiste dolore deleniti beatae at eligendi repellendus vel earum quae.
-          </p>
-        </div>
-      </a>
+      <g-image src="~/assets/img/logo/logo.png" 
+        class="content-collection-item__thumbnail cover"
+        alt="Thumbnail picture"
+        title="Thumbnail picture" aria-hidden="true" />
+      <div class="content-collection-item__title vertical-center">
+        <span class="content-collection-item__title-span">Doloremque ipsam cumque voluptatum</span>
+      </div>
     </article>
   </div>
   <a href="#" class="site-button site-button--default">Leniti blanditiis!</a>
@@ -150,12 +132,13 @@ export default {
 <style lang="stylus" scoped>
 .home-carousel
   color white
-  height calc(95vh - 72px)
   background-color $primaryThemeColor
-  overflow hidden // Remove when carousel is ready
+  height calc(95vh - 72px)
+  min-height auto
+  padding 20px 0
 
-  @media screen and (orientation: portrait) and (min-height: 400px) and (min-width: 400px)
-    max-height 76vw
+  @media screen and (orientation: portrait)
+    max-height "min(76vh, 500px)" % null
 
   .swiper-button-next,
   .swiper-button-prev
