@@ -74,24 +74,8 @@
     Commodi possimus quas aut voluptatum quod iure, voluptate, quasi veniam ea iste, similique laudantium molestiae provident nihil corporis quae excepturi. Inventore, nulla!
   </p>
   <div class="content-collection">
-    <article class="content-collection-item">
-      <g-image src="~/assets/img/logo/logo.png" 
-        class="content-collection-item__thumbnail cover"
-        alt="Thumbnail picture"
-        title="Thumbnail picture" aria-hidden="true" />
-      <div class="content-collection-item__title vertical-center">
-        <span class="content-collection-item__title-span">Esse inventore, eveniet eligendi</span>
-      </div>
-    </article>
-    <article class="content-collection-item">
-      <g-image src="~/assets/img/logo/logo.png" 
-        class="content-collection-item__thumbnail cover"
-        alt="Thumbnail picture"
-        title="Thumbnail picture" aria-hidden="true" />
-      <div class="content-collection-item__title vertical-center">
-        <span class="content-collection-item__title-span">Doloremque ipsam cumque voluptatum</span>
-      </div>
-    </article>
+    <CollectionItemAndModal :item="collectionItems[0]"/>
+    <CollectionItemAndModal :item="collectionItems[1]"/>
   </div>
   <a href="#" class="site-button site-button--default">Leniti blanditiis!</a>
 </div>
@@ -101,6 +85,7 @@
 <script>
 import '~/assets/styl/content_collection.styl';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
+import CollectionItemAndModal from '../components/CollectionItemAndModal';
 
 export default {
   metaInfo: {
@@ -108,7 +93,8 @@ export default {
   },
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    CollectionItemAndModal
   },
   data() {
     return {
@@ -118,7 +104,20 @@ export default {
           prevEl: '.swiper-button-prev'
         },
         loop: true
-      }
+      },
+      // TODO: Use graphQL to retrieve these
+      collectionItems: [
+        {
+          title : 'Esse inventore, eveniet eligendi',
+          thumbnail : '~/assets/img/logo/logo.png',
+          description: `Quos reprehenderit ducimus esse cumque veniam adipisci. Labore soluta deleniti repudiandae nisi non fuga autem odio debitis alias hic, dicta dolorem eum doloribus minus! Aut sit illum commodi sint quas.`
+        },
+        {
+          title: 'Doloreq cumque voluptatum',
+          thumbnail: '~/assets/img/logo/logo.png',
+          description: `Modi ratione magni veniam laudantium architecto excepturi facere pariatur consequuntur voluptatum cupiditate veritatis sequi natus! Quaerat repellendus facilis error placeat blanditiis ea.`
+        }
+      ]
     }
   },
   computed: {
