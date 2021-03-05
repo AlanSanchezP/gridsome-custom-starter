@@ -74,13 +74,27 @@
     Commodi possimus quas aut voluptatum quod iure, voluptate, quasi veniam ea iste, similique laudantium molestiae provident nihil corporis quae excepturi. Inventore, nulla!
   </p>
   <div class="content-collection">
-    <CollectionItemAndModal :item="collectionItems[0]"/>
-    <CollectionItemAndModal :item="collectionItems[1]"/>
+    <CollectionItemAndModal v-for="item in $page.items.edges" v-bind:item="item.node" v-bind:key="item.node.id"/>
   </div>
   <a href="#" class="site-button site-button--default">Leniti blanditiis!</a>
 </div>
 </Layout>
 </template>
+
+<page-query>
+query {
+  items: allItem(limit: 2) {
+    edges {
+      node {
+        id
+        title
+        thumbnail
+        description
+      }
+    }
+  }
+}
+</page-query>
 
 <script>
 import '~/assets/styl/content_collection.styl';
@@ -104,20 +118,7 @@ export default {
           prevEl: '.swiper-button-prev'
         },
         loop: true
-      },
-      // TODO: Use graphQL to retrieve these
-      collectionItems: [
-        {
-          title : 'Esse inventore, eveniet eligendi',
-          thumbnail : '~/assets/img/logo/logo.png',
-          description: `Quos reprehenderit ducimus esse cumque veniam adipisci. Labore soluta deleniti repudiandae nisi non fuga autem odio debitis alias hic, dicta dolorem eum doloribus minus! Aut sit illum commodi sint quas.`
-        },
-        {
-          title: 'Doloreq cumque voluptatum',
-          thumbnail: '~/assets/img/logo/logo.png',
-          description: `Modi ratione magni veniam laudantium architecto excepturi facere pariatur consequuntur voluptatum cupiditate veritatis sequi natus! Quaerat repellendus facilis error placeat blanditiis ea.`
-        }
-      ]
+      }
     }
   },
   computed: {
