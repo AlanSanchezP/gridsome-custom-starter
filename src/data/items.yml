@@ -2,12 +2,18 @@
 - id: 0
   title: Esse inventore, eveniet eligendi
   thumbnail: ~/assets/img/logo/logo.png
+  cover: ~/assets/img/logo/logo.png
   description: Quos reprehenderit ducimus esse cumque veniam adipisci. Labore soluta deleniti repudiandae nisi non fuga autem odio debitis alias hic, dicta dolorem eum doloribus minus! Aut sit illum commodi sint quas.
+  videoEmbedUrl: https://www.youtube.com/embed/E6WecqD1c0E
 - id: 1
   title: Doloreq cumque voluptatum
   thumbnail: ~/assets/img/logo/logo.png
+  cover: ~/assets/img/logo/logo.png
   description: Modi ratione magni veniam laudantium architecto excepturi facere pariatur consequuntur voluptatum cupiditate veritatis sequi natus! Quaerat repellendus facilis error placeat blanditiis ea.
+  videoEmbedUrl: https://www.youtube.com/embed/2d1VrCvdzbY
 - id: 2
   title: Vero, ut laboriosam et repudiandae 
   thumbnail: ~/assets/img/logo/logo.png
+  cover: ~/assets/img/logo/logo.png
   description: Consequuntur, officiis libero, quod laudantium nihil, quis voluptas tempore mollitia suscipit exercitationem praesentium aliquid! Obcaecati reprehenderit non ullam eaque quaerat quis facere! Perferendis impedit possimus ratione assumenda cumque nihil quam.
+  videoEmbedUrl: https://www.youtube.com/embed/Xpj39q1Cn-4

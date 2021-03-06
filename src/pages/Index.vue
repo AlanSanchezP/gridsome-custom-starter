@@ -90,6 +90,7 @@ query {
         title
         thumbnail
         description
+        path
       }
     }
   }
