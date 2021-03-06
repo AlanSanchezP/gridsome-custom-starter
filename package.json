@@ -19,6 +19,7 @@
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {
+    "js-yaml": "^4.0.0",
     "poststylus": "^1.0.1",
     "style-resources-loader": "^1.4.1",
     "stylus": "^0.54.8",
