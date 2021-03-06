@@ -7,7 +7,7 @@
 
 module.exports = function (api) {
   api.loadSource(actions => {
-    const items = actions.addCollection('item');
+    const items = actions.addCollection('Item');
 
     items.addNode({
       id: 0,

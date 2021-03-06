@@ -7,7 +7,7 @@
     <div class="content-collection-item-modal__data">
       <h3 class="content-collection-item-modal__title"> {{ item.title }} </h3>
       <p class="content-collection-item-modal__description">{{ item.description }}</p>
-      <a class="site-button site-button--default" href="#">Possimus totam!</a>
+      <g-link :to="itemPath" class="site-button site-button--default" @click.native="$emit('close')">Possimus totam!</g-link>
     </div>
   </div>
 </template>
@@ -22,6 +22,9 @@ export default {
   computed: {
     thumbnailSrc() {
       return require('~/assets/' + this.item.thumbnail.replace('~/assets/', ''));
+    },
+    itemPath() {
+      return '/items/' + this.item.id;
     }
   }
 }

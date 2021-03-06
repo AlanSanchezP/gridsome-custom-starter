@@ -21,6 +21,9 @@ function addStyleResource (rule) {
 module.exports = {
   siteName: 'Gridsome',
   plugins: [],
+  templates: {
+    Item: '/items/:id'
+  },
   css: {
     loaderOptions: {
       stylus: {
