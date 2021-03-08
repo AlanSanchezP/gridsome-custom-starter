@@ -98,7 +98,6 @@ query {
 </page-query>
 
 <script>
-import '~/assets/styl/content_collection.styl';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import CollectionItemAndModal from '../components/CollectionItemAndModal';
 

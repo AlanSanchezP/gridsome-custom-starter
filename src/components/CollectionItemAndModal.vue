@@ -1,5 +1,5 @@
 <template>
-  <CollectionItem @click.native="showModal" :item="item"/>
+  <CollectionItem @click.native="showModal" :item="item" :useLink="false"/>
 </template>
 
 <script>
