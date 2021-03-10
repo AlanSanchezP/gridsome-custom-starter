@@ -29,65 +29,64 @@
 <script>
 import {OffClickHandlerBuilder} from '~/OffClickDirective';
 
-// keys: string
-//  using the format w<WIDTH>h<HEIGHT> : w1024h720
-// values: integer
-//  -1|0|1 for "unsure but calculating", "not use hamburger" and "use hamburger"
-var resolutionsMapping = new Map();
+// keys: string using the format w<WIDTH>h<HEIGHT> : w1024h720
+const RESOLUTIONS_MAPPING = new Map();
+const CALCULATING = -1;
+const NOT_USE_HAMBURGER = 0;
+const USE_HAMBURGER = 1
 
 function checkResponsive() {
   if (!this) {
     console.warn("Call this function using checkResponsive.call(this)");
     return;
   }
-  var windowSize = `w${window.screen.availWidth}h${window.screen.availHeight}`;
+  const WINDOW_SIZE = `w${window.screen.availWidth}h${window.screen.availHeight}`;
 
   // This prevents the need to shedule more things than needed
   //  and prevents double checks (onresize triggers more than once for some reason,
   //  at least on developer tools)  
-  if (resolutionsMapping.has(windowSize)) {
-    let storedValue = resolutionsMapping.get(windowSize);
-    if (storedValue === -1) return;
-    else if (storedValue === 1) {
+  if (RESOLUTIONS_MAPPING.has(WINDOW_SIZE)) {
+    let storedValue = RESOLUTIONS_MAPPING.get(WINDOW_SIZE);
+    if (storedValue === CALCULATING) return;
+    else if (storedValue === USE_HAMBURGER) {
       this.useHamburger = true;
+      this.performingResponsiveEvaluation = false;
     } else {
       this.closeMenu();
       this.useHamburger = false;
+      this.performingResponsiveEvaluation = false;
     }
     return;
   }
 
-  // Indicate that this resolution is already being handled
-  resolutionsMapping.set(windowSize, -1);
+  RESOLUTIONS_MAPPING.set(WINDOW_SIZE, CALCULATING);
   this.useHamburger = false;
   this.performingResponsiveEvaluation = true;
-  // TODO: Investigate if this can cause any issues with timeouts from different events
 
   // It's necessary to schedule this so that Vue can update the DOM.
   //  Otherwise, this.$refs.menu.offsetTop value won't update and the check won't work
-  function scheduledCheck() {
+  this.$nextTick(function scheduledCheck() {
     var childHeight = this.$refs.menu.firstChild.offsetHeight;
     // Check if elements got separated into 2 or more rows.
     //  Using 1.2 factor to allow human-caused margin overflows (?)
     if (this.$refs.menu.offsetHeight > childHeight * 1.2) {
-      resolutionsMapping.set(windowSize, 1);
+      RESOLUTIONS_MAPPING.set(WINDOW_SIZE, USE_HAMBURGER);
       this.useHamburger = true;
     } else {
-      resolutionsMapping.set(windowSize, 0);
+      RESOLUTIONS_MAPPING.set(WINDOW_SIZE, NOT_USE_HAMBURGER);
       this.closeMenu();
       this.useHamburger = false;
     }
     this.performingResponsiveEvaluation = false;
-  }
-
-  setTimeout(scheduledCheck.bind(this), 0);
+  });
 }
 
 export default {
   // TODO: Receive menu links through params
   mounted() {
-    checkResponsive.call(this);
     window.addEventListener('resize', checkResponsive.bind(this), true);
+    // If dispatching right away, something weird happens with menu height
+    this.$nextTick(() => window.dispatchEvent(new Event('resize')));
   },
   beforeDestroy() {
     window.removeEventListener('resize', checkResponsive.bind(this), true);
@@ -114,7 +113,7 @@ export default {
     return {
       showSidebarMenu: false,
       useHamburger: false,
-      performingResponsiveEvaluation: false,
+      performingResponsiveEvaluation: true, // default to true to prevent initial blink
       offClickHandler: new OffClickHandlerBuilder()
                         .setAction(this.closeMenu)
                         .setEvaluator(() => this.useHamburger == this.showSidebarMenu)
