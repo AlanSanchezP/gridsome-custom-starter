@@ -20,6 +20,7 @@
           <g-link to="/about" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active" exact>About</g-link>
           <g-link to="/contact" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active" exact>Contact</g-link>
           <g-link to="/items" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active">Items</g-link>
+          <g-link to="/more" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active">More</g-link>
         </nav>
       </div>
     </header>
