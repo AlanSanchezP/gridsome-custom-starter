@@ -95,7 +95,7 @@ export default {
       }
       DOESN'T SUPPORT EXTERNAL LINKS FOR NOW
     */
-    routes: {type: Array, default: [], required: true}
+    routes: {type: Array, required: true}
   },
   mounted() {
     window.addEventListener('resize', checkResponsive.bind(this), true);
