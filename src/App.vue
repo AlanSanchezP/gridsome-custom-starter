@@ -2,7 +2,10 @@
   <div id="app">
     <Navigation :routes="navRoutes" />
     <router-view id="main-content"/>
-    <Footer />
+    <Footer :links="footerData.links"
+      :social="footerData.social"
+      :contact="footerData.contact"
+      :address="footerData.address" />
   </div>
 </template>
 
@@ -35,7 +38,62 @@ export default {
           path: '/more',
           text: 'More',
         }
-      ]
+      ],
+      footerData: {
+        links: [
+          {
+            path: '/',
+            text: 'Footer link'
+          },
+          {
+            path: '/',
+            text: 'Footer link'
+          },
+          {
+            path: '/',
+            text: 'Footer link'
+          },
+          {
+            path: '/',
+            text: 'Footer link'
+          },
+          {
+            path: '/',
+            text: 'Footer link'
+          }
+        ],
+        social: [
+          {
+            linkTo: '#',
+            type: 'facebook'
+          },
+          {
+            linkTo: '#',
+            type: 'twitter'
+          },
+          {
+            linkTo: '#',
+            type: 'instagram'
+          }
+        ],
+        contact: [
+          {
+            type: 'phone',
+            value: '',
+            text: '+0 0000000'
+          },
+          {
+            type: 'phone',
+            value: '',
+            text: '+0 0000000'
+          },
+          {
+            type: 'mail',
+            value: 'hello@test.test'
+          }
+        ],
+        address: 'Company address'
+      }
     }
   }
 }

@@ -6,44 +6,63 @@
           title="Logo" />
       </g-link>
       <div class="site-footer__links">
-        <a href="#" class="site-footer__link-item">Footer link item</a>
-        <a href="#" class="site-footer__link-item">Footer link item</a>
-        <a href="#" class="site-footer__link-item">Footer link item</a>
-        <a href="#" class="site-footer__link-item">Footer link item</a>
-        <a href="#" class="site-footer__link-item">Footer link item</a>
+        <g-link v-for="(item, index) in links" :key="`link-${index}`"
+            :to="item.path"
+            :exact="item.matchExact != false"
+            class="site-footer__link-item"
+            v-text="item.text" />
       </div>
       <div class="site-footer__social">
-        <a href="#" target="_blank" class="site-footer__social-item" title="Link to Facebook page">
-          <font-awesome-icon :icon="['fab', 'facebook-f']" />
-        </a>
-        <a href="#" target="_blank" class="site-footer__social-item" title="Link to Instagram profile">
-          <font-awesome-icon :icon="['fab', 'instagram']" />
-        </a>
-        <a href="#" target="_blank" class="site-footer__social-item" title="Link to Twitter profile">
-          <font-awesome-icon :icon="['fab', 'twitter']" />
+        <a v-for="(item, index) in social"
+          class="site-footer__social-item"
+          target="_blank"
+          :key="`social-${index}`"
+          :href="item.linkTo"
+          :title="'Contact us at ' + item.type" >
+          <font-awesome-icon :icon="['fab', 'facebook-f']" v-if="item.type == 'facebook'" />
+          <font-awesome-icon :icon="['fab', 'twitter']" v-else-if="item.type == 'twitter'" />
+          <font-awesome-icon :icon="['fab', 'instagram']" v-else-if="item.type == 'instagram'" />
         </a>
       </div>
       <div class="site-footer__contact">
-        <a href="callto:" class="site-footer__link-item">
-          <font-awesome-icon icon="phone-alt" />
-          +0 0000000
-        </a>
-        <a href="callto:" class="site-footer__link-item">
-          <font-awesome-icon icon="phone-alt" />
-          +0 0000000
-        </a>
-        <a href="mailto:" class="site-footer__link-item">
-          <font-awesome-icon icon="envelope" />
-          hello@test.test
+        <a v-for="(item, index) in contact"
+          class="site-footer__link-item"
+          :key="`contact-${index}`"
+          :href="(item.type == 'phone' ? 'tel:' : 'mailto:') + item.value" >
+          <font-awesome-icon :icon="(item.type == 'phone' ? 'phone-alt' : 'envelope')" />
+          {{ item.text != undefined ? item.text : item.value }}
         </a>
       </div>
-    <address class="site-footer__address">Company Address</address>
+    <address class="site-footer__address" v-text="address" />
   </footer>
 </template>
 
 <script>
 export default {
     // TODO: Make it dynamic via params
+    props: {
+      /* Format: {
+          path: String,
+          text: String
+        }
+        DOESN'T SUPPORT EXTERNAL LINKS FOR NOW
+      */
+      links: {type: Array, default: () => []},
+      /* Format: {
+          linkTo: String,
+          type: String [ facebook | twitter | instagram] TODO: Support more
+        }
+      */
+      social: {type: Array, default: () => []},
+      /* Format: {
+          value: String,
+          text: String (optional),
+          type: String [ phone | mail ] TODO: Support more,
+        }
+      */
+      contact: {type: Array, default: () => []},
+      address: {type: String, default: 'Company Address'}
+    }
 }
 </script>
 
