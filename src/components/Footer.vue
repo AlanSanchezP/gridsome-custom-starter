@@ -49,6 +49,7 @@ export default {
 
 <style lang="stylus" scoped>
 .site-footer
+  align-items center
   display grid
   grid-template-areas "logo" \
                   "links" \

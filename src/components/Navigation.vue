@@ -13,7 +13,7 @@
         <button v-if="useHamburger" type="button" class="navigation-bar__close-menu" @click="closeMenu">
           <font-awesome-icon icon="times" />
         </button>
-        <g-link class="navigation-bar__hamburger-logo" to="/" @click="closeMenu">
+        <g-link v-if="useHamburger" class="navigation-bar__hamburger-logo" to="/">
           <g-image src="~/assets/img/logo/logo-full-white.png" 
             alt="Logo accessibility description"
             title="Logo" />
@@ -208,6 +208,8 @@ $hamburgerShadowColor = $defaultTextColor
     color $inverseTextColor
     font-size 1.5rem
     margin-bottom 5px
+    margin-right 8px
+    outline none
     padding 5px 15px
 
 .navigation-bar__menu-trigger
@@ -239,9 +241,9 @@ $hamburgerShadowColor = $defaultTextColor
     width auto
 
 .navigation-bar__hamburger-logo
-  display none
-  center-block()
+  display block
   width 70%
+  center-block()
 
   img
     width 100%
@@ -281,9 +283,6 @@ $hamburgerShadowColor = $defaultTextColor
     &.navigation-bar__menu-container--visible
       right 0
       box-shadow 0 0 10px $hamburgerShadowColor
-
-      .navigation-bar__hamburger-logo
-        display block
 
   .navigation-bar__menu
     margin-top 30px
