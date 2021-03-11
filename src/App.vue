@@ -18,83 +18,81 @@ export default {
     Navigation,
     Footer
   },
-  data() {
-    return {
-      navRoutes: [
+  created() {
+    this.navRoutes = [
+      {
+        path: '/',
+        text: 'Home'
+      }, {
+        path: '/about',
+        text: 'About'
+      }, {
+        path: '/contact',
+        text: 'Contact'
+      }, {
+        path: '/items',
+        matchExact: false,
+        text: 'Items'
+      }, {
+        path: '/more',
+        text: 'More',
+      }
+    ];
+    this.footerData = {
+      links: [
         {
           path: '/',
-          text: 'Home'
-        }, {
-          path: '/about',
-          text: 'About'
-        }, {
-          path: '/contact',
-          text: 'Contact'
-        }, {
-          path: '/items',
-          matchExact: false,
-          text: 'Items'
-        }, {
-          path: '/more',
-          text: 'More',
+          text: 'Footer link'
+        },
+        {
+          path: '/',
+          text: 'Footer link'
+        },
+        {
+          path: '/',
+          text: 'Footer link'
+        },
+        {
+          path: '/',
+          text: 'Footer link'
+        },
+        {
+          path: '/',
+          text: 'Footer link'
         }
       ],
-      footerData: {
-        links: [
-          {
-            path: '/',
-            text: 'Footer link'
-          },
-          {
-            path: '/',
-            text: 'Footer link'
-          },
-          {
-            path: '/',
-            text: 'Footer link'
-          },
-          {
-            path: '/',
-            text: 'Footer link'
-          },
-          {
-            path: '/',
-            text: 'Footer link'
-          }
-        ],
-        social: [
-          {
-            linkTo: '#',
-            type: 'facebook'
-          },
-          {
-            linkTo: '#',
-            type: 'twitter'
-          },
-          {
-            linkTo: '#',
-            type: 'instagram'
-          }
-        ],
-        contact: [
-          {
-            type: 'phone',
-            value: '',
-            text: '+0 0000000'
-          },
-          {
-            type: 'phone',
-            value: '',
-            text: '+0 0000000'
-          },
-          {
-            type: 'mail',
-            value: 'hello@test.test'
-          }
-        ],
-        address: 'Company address'
-      }
-    }
+      social: [
+        {
+          linkTo: '#',
+          type: 'facebook'
+        },
+        {
+          linkTo: '#',
+          type: 'twitter'
+        },
+        {
+          linkTo: '#',
+          type: 'instagram'
+        }
+      ],
+      contact: [
+        {
+          type: 'phone',
+          value: '',
+          text: '+0 0000000'
+        },
+        {
+          type: 'phone',
+          value: '',
+          text: '+0 0000000'
+        },
+        {
+          type: 'mail',
+          value: 'hello@test.test'
+        }
+      ],
+      address: 'Company address'
+    };
   }
 }
 </script>
