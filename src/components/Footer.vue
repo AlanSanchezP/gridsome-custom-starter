@@ -8,7 +8,6 @@
       <div class="site-footer__links">
         <g-link v-for="(item, index) in links" :key="`link-${index}`"
             :to="item.path"
-            :exact="item.matchExact != false"
             class="site-footer__link-item"
             v-text="item.text" />
       </div>
