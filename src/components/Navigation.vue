@@ -16,11 +16,13 @@
             title="Logo" />
         </g-link>
         <nav class="navigation-bar__menu" ref="menu">
-          <g-link to="/" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active" exact>Home</g-link>
-          <g-link to="/about" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active" exact>About</g-link>
-          <g-link to="/contact" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active" exact>Contact</g-link>
-          <g-link to="/items" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active">Items</g-link>
-          <g-link to="/more" class="navigation-bar__menu-link" active-class="navigation-bar__menu-link--active">More</g-link>
+          <g-link v-for="(route, index) in routes" :key="`route-${index}`"
+            :to="route.path"
+            :exact="route.matchExact != false"
+            class="navigation-bar__menu-link"
+            active-class="navigation-bar__menu-link--active">
+            {{route.text}}
+          </g-link>
         </nav>
       </div>
     </header>
@@ -82,7 +84,16 @@ function checkResponsive() {
 }
 
 export default {
-  // TODO: Receive menu links through params
+  props: {
+    /* Format: {
+        path: String,
+        matchExact: Boolean | default: true,
+        text: String
+      }
+      DOESN'T SUPPORT EXTERNAL LINKS FOR NOW
+    */
+    routes: {type: Array, default: [], required: true}
+  },
   mounted() {
     window.addEventListener('resize', checkResponsive.bind(this), true);
     // If dispatching right away, something weird happens with menu height

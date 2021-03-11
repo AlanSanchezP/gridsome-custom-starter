@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navigation />
+    <Navigation :routes="navRoutes" />
     <router-view id="main-content"/>
     <Footer />
   </div>
@@ -14,6 +14,29 @@ export default {
   components: {
     Navigation,
     Footer
+  },
+  data() {
+    return {
+      navRoutes: [
+        {
+          path: '/',
+          text: 'Home'
+        }, {
+          path: '/about',
+          text: 'About'
+        }, {
+          path: '/contact',
+          text: 'Contact'
+        }, {
+          path: '/items',
+          matchExact: false,
+          text: 'Items'
+        }, {
+          path: '/more',
+          text: 'More',
+        }
+      ]
+    }
   }
 }
 </script>
