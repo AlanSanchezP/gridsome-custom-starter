@@ -10,6 +10,9 @@
         <span>Display menu</span>
       </button>
       <div class="navigation-bar__menu-container" v-bind:class="{'navigation-bar__menu-container--visible': showSidebarMenu}"  v-offClick="offClickHandler">
+        <button v-if="useHamburger" type="button" class="navigation-bar__close-menu" @click="closeMenu">
+          <font-awesome-icon icon="times" />
+        </button>
         <g-link class="navigation-bar__hamburger-logo" to="/" @click="closeMenu">
           <g-image src="~/assets/img/logo/logo-full-white.png" 
             alt="Logo accessibility description"
@@ -199,6 +202,14 @@ $hamburgerShadowColor = $defaultTextColor
   &.performing-responsive-evaluation .navigation-bar__menu-container
     opacity 0
 
+  &__close-menu
+    background none
+    border none
+    color $inverseTextColor
+    font-size 1.5rem
+    margin-bottom 5px
+    padding 5px 15px
+
 .navigation-bar__menu-trigger
   background transparent
   border none
@@ -263,7 +274,7 @@ $hamburgerShadowColor = $defaultTextColor
     top 0
     transition right 0.2s
     width 280px
-    padding-top 25px
+    padding-top 15px
     padding-bottom 50px
     z-index $hamburgerZindex
 
