@@ -1,7 +1,7 @@
 <template>
   <Layout class="about-page">
     <div class="about-page__cover cover vertical-center simple-parallax">
-      <h1 class="about-page__title">Debitis repellendus nam?</h1>
+      <h1 class="page-title about-page__title">Debitis repellendus nam?</h1>
     </div>
     <div class="about-page__introduction">
       <g-image src="~/assets/img/logo/logo.png" alt="Logo" class="about-page__logo" />
@@ -48,8 +48,9 @@ export default {
   &__title
     color $inverseTextColor
     font-size remify(36)
-    margin-bottom 0
     text-shadow 0 0 remify(10) $defaultTextColor
+    width 90%
+    center-block()
 
   &__introduction
     background $inverseTextColor

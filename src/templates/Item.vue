@@ -2,7 +2,7 @@
    <Layout class="content-collection-item-page">
     <div class="content-collection-item-page__cover cover vertical-center" 
       :style="{'background-image': 'url(' + coverSrc + ')'}">
-        <h1 class="content-collection-item-page__title" v-text="$page.item.title"></h1>
+        <h1 class="page-title content-collection-item-page__title" v-text="$page.item.title"></h1>
     </div>
     <p class="content-collection-item-page__description" v-text="$page.item.description"></p>
     <div class="content-collection-item-page__video">
@@ -56,9 +56,11 @@ export default {
 
   &__title
     color $inverseTextColor
-    font-size remify(36)
+    font-size remify(34)
     font-weight $heavy
     text-shadow 0 0 remify(10) $defaultTextColor
+    width 90%
+    center-block()
 
   &__description
     background $inverseTextColor

@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <h1 class="special-title">Consectetur adipisicing</h1>
+    <h1 class="page-title special-title">Consectetur adipisicing</h1>
     
     <div class="incomplete-box">
       <p>

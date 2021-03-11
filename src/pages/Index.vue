@@ -176,7 +176,8 @@ export default {
       max-width "max(344px, 40vw)" % null
 
     &__title
-      font-size remify(35)
+      font-family 'Avenir'
+      font-size remify(32)
 
     &__text
       line-height 1.17
@@ -266,6 +267,7 @@ export default {
   center-block()
 
   &__title
+    font-family 'Avenir'
     font-size remify(20)
     padding-bottom unit(33/22, 'em')
 

@@ -1,6 +1,6 @@
 <template>
   <Layout class="content-collection-page">
-    <h1 class="site-title">Items</h1>
+    <h1 class="page-title">Items</h1>
     <div class="content-collection">
       <CollectionItem v-for="item in $page.items.edges" v-bind:item="item.node" v-bind:key="item.node.id" />
     </div>
@@ -36,8 +36,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.site-title
-  color $primaryThemeColor
+.page-title
   text-align center
 
 .content-collection
