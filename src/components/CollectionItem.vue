@@ -48,7 +48,7 @@ export default {
   &__title
     font-size remify(19)
     padding 0.5em 0.4em
-    font-weight $medium
+    font-weight $_medium
     min-height 4em
     text-align center
 

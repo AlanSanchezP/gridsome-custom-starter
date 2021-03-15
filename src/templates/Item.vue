@@ -57,7 +57,7 @@ export default {
   &__title
     color $inverseTextColor
     font-size remify(34)
-    font-weight $heavy
+    font-weight $_heavy
     text-shadow 0 0 remify(10) $defaultTextColor
     width 90%
     center-block()

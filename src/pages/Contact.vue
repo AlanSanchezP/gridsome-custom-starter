@@ -95,7 +95,7 @@ export default {
 
   &__input
     color $inputTextColor
-    font-weight $bold
+    font-weight $_bold
     font-size inherit
     padding 1em 2em
     simple-border('all', remify(0.5), $lightShadowColor)
@@ -107,7 +107,7 @@ export default {
     &::placeholder
       color rgba($inputTextColor, 0.86)
       font-family inherit
-      font-weight $normal
+      font-weight $_normal
 
     textarea&
       height 180px

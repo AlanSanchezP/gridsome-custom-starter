@@ -38,7 +38,7 @@ export default {
     flex-direction column
 
   &__title
-    font-weight $heavy
+    font-weight $_heavy
     font-size remify(25)
 
   &__thumbnail
@@ -54,7 +54,7 @@ export default {
 
   &__description
     color $gray1
-    font-weight $medium
+    font-weight $_medium
     line-height 1.5
     margin-top remify(12)
 
