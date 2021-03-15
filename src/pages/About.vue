@@ -96,7 +96,7 @@ export default {
       center-block()
 
       &:nth-of-type(1)
-        .about-page__content-image
+        & ^[0]__content-image
           margin-bottom 2.5rem
           margin-left 0
           max-width 380px
@@ -106,7 +106,7 @@ export default {
       &:nth-of-type(2) 
         padding-bottom remify(108)
 
-        .about-page__content-image
+        & ^[0]__content-image
           margin remify(40) remify(100) 0 remify(100)
 
 @media screen and (min-width: 682px)
@@ -133,11 +133,11 @@ export default {
         p
           margin 2.5em 0 0 0
 
-        .about-page__content-image
+        & ^[0]__content-image
           flex-grow 1
 
         &:nth-of-type(1) 
-          .about-page__content-image
+          & ^[0]__content-image
             margin-bottom 0
             margin-left remify(-121)
             margin-right 2rem
@@ -149,7 +149,7 @@ export default {
             flex-basis 70%
 
         &:nth-of-type(2) 
-          .about-page__content-image
+          & ^[0]__content-image
             margin-left 3rem
             margin-right remify(-60)
 

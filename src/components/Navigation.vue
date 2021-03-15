@@ -199,7 +199,7 @@ $hamburgerShadowColor = $defaultTextColor
   z-index $navbarZindex
   simple-border('bottom', remify(1), $lightShadowColor)
 
-  &.performing-responsive-evaluation .navigation-bar__menu-container
+  &.performing-responsive-evaluation &__menu-container
     opacity 0
 
   &__close-menu
@@ -212,93 +212,93 @@ $hamburgerShadowColor = $defaultTextColor
     outline none
     padding 5px 15px
 
-.navigation-bar__menu-trigger
-  background transparent
-  border none
-  display none
-  margin 18px 0
-  height 20px
-  width 20px
-  line-height 1.5em
-  padding 0
-  outline none
+  &__menu-trigger
+    background transparent
+    border none
+    display none
+    margin 18px 0
+    height 20px
+    width 20px
+    line-height 1.5em
+    padding 0
+    outline none
 
-  .svg-inline--fa
-    color $activeLinkAccent
+    .svg-inline--fa
+      color $activeLinkAccent
 
-  span
-    font-size 0
-  
-.navigation-bar__menu-container
-  flex-grow 1
-  text-align right
+    span
+      font-size 0
 
-.navigation-bar__main-logo
-  height 63%
+  &__menu-container
+    flex-grow 1
+    text-align right
 
-  img
-    height 100%
-    width auto
+  &__main-logo
+    height 63%
 
-.navigation-bar__hamburger-logo
-  display block
-  width 70%
-  center-block()
+    img
+      height 100%
+      width auto
 
-  img
-    width 100%
-
-.navigation-bar__menu-link
-  line-height $thinNavbarHeight - $activeLinkBorderHeight
-
-.navigation-bar:not(.navigation-bar--use-hamburger)
-  .navigation-bar__menu-link
-    color $linkColor
-    display inline-block
-    font-size 1rem
-    simple-border('bottom', $activeLinkBorderHeight, transparent)
-    padding 0 0.7em
-
-    &:hover, &.navigation-bar__menu-link--active
-      simple-border('bottom', $activeLinkBorderHeight, $activeLinkAccent)
-
-.navigation-bar.navigation-bar--use-hamburger
-  .navigation-bar__menu-trigger
+  &__hamburger-logo
     display block
+    width 70%
+    center-block()
 
-  .navigation-bar__menu-container
-    background $hamburgerBg
-    height 100vh
-    margin-right 0
-    overflow-y auto
-    position fixed
-    right -280px
-    top 0
-    transition right 0.2s
-    width 280px
-    padding-top 15px
-    padding-bottom 50px
-    z-index $hamburgerZindex
+    img
+      width 100%
 
-    &.navigation-bar__menu-container--visible
-      right 0
-      box-shadow 0 0 10px $hamburgerShadowColor
+  &__menu-link
+    line-height $thinNavbarHeight - $activeLinkBorderHeight
 
-  .navigation-bar__menu
-    margin-top 30px
-    text-align left
+  &:not(^[0]--use-hamburger)
+    & ^[0]__menu-link
+      color $linkColor
+      display inline-block
+      font-size 1rem
+      simple-border('bottom', $activeLinkBorderHeight, transparent)
+      padding 0 0.7em
 
-  .navigation-bar__menu-link
-    color $hamburgerLinkColor
-    display block
-    font-size remify(16)
-    line-height 1
-    padding 1em 2em
-    simple-border('left', $activeLinkBorderWidth, transparent)
+      &:hover, &--active
+        simple-border('bottom', $activeLinkBorderHeight, $activeLinkAccent)
 
-    &:hover, &:active, &.navigation-bar__menu-link--active
-      background-color $hamburgerLinkBg
-      simple-border('left', $activeLinkBorderWidth, $hamburgerActiveLinkAccent)
+  &&--use-hamburger
+    & ^[0]__menu-trigger
+      display block
+
+    & ^[0]__menu-container
+      background $hamburgerBg
+      height 100vh
+      margin-right 0
+      overflow-y auto
+      position fixed
+      right -280px
+      top 0
+      transition right 0.2s
+      width 280px
+      padding-top 15px
+      padding-bottom 50px
+      z-index $hamburgerZindex
+
+      &--visible
+        right 0
+        box-shadow 0 0 10px $hamburgerShadowColor
+
+    & ^[0]__menu
+      margin-top 30px
+      text-align left
+
+    & ^[0]__menu-link
+      color $hamburgerLinkColor
+      display block
+      font-size remify(16)
+      line-height 1
+      padding 1em 2em
+      simple-border('left', $activeLinkBorderWidth, transparent)
+
+      &:hover, &:active, &--active
+        background-color $hamburgerLinkBg
+        simple-border('left', $activeLinkBorderWidth, $hamburgerActiveLinkAccent)
 
 @media screen and (min-width: $desktopScreenBreakpoint)
   .navigation-bar
@@ -306,17 +306,16 @@ $hamburgerShadowColor = $defaultTextColor
     height $desktopScreenNavbarHeight
     padding 0 remify(34)
 
-    &:not(.navigation-bar--use-hamburger) .navigation-bar__menu-link
+    &:not(^[0]--use-hamburger) &__menu-link
       font-size remify(16)
       line-height $desktopScreenNavbarHeight - $activeLinkBorderHeight
       padding 0 0.7em
-
 
 @media screen and (min-width: $bigScreenAt)
   .navigation-bar
     height min(remify(50), 10vh)
 
-    &:not(.navigation-bar--use-hamburger) .navigation-bar__menu-link
+    &:not(^[0]--use-hamburger) &__menu-link
       font-size remify(16)
       height 100%
       line-height min(remify(40), 9vh)
@@ -324,5 +323,4 @@ $hamburgerShadowColor = $defaultTextColor
     &__menu-container,
     &__menu
       height 100%
-
 </style>

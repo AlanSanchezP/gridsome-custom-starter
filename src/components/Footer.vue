@@ -81,51 +81,51 @@ export default {
   text-align center
   font-size remify(16)
 
-.site-footer__logo
-  grid-area logo
-  justify-self center
-  width auto
+  &__logo
+    grid-area logo
+    justify-self center
+    width auto
 
-  img
-    width remify(140)
+    img
+      width remify(140)
 
-.site-footer__link-item
-  color white
-  display block
-  line-height 1.96
-  transition opacity 0.2s
+  &__link-item
+    color white
+    display block
+    line-height 1.96
+    transition opacity 0.2s
 
-  &:hover
-    opacity 0.8
+    &:hover
+      opacity 0.8
 
-.site-footer__links
-  grid-area links
+  &__links
+    grid-area links
 
-.site-footer__social
-  grid-area social
-  align-self center
+  &__social
+    grid-area social
+    align-self center
 
-.site-footer__social-item
-  background-color transparent
-  color white
-  display inline-block
-  line-height 2.1em
-  height remify(35)
-  width remify(35)
-  margin 0 remify(5)
-  transition background-color 0.2s
-  simple-border('all', remify(1), white)
+  &__social-item
+    background-color transparent
+    color white
+    display inline-block
+    line-height 2.1em
+    height remify(35)
+    width remify(35)
+    margin 0 remify(5)
+    transition background-color 0.2s
+    simple-border('all', remify(1), white)
 
-  &:hover
-    background-color white
-    color $primaryThemeColor
+    &:hover
+      background-color white
+      color $primaryThemeColor
 
-.site-footer__contact
-  grid-area contact
+  &__contact
+    grid-area contact
 
-.site-footer__address
-  grid-area bottom
-  line-height 1.36
+  &__address
+    grid-area bottom
+    line-height 1.36
 
 @media screen and (min-width: 450px)
   .site-footer
@@ -145,12 +145,12 @@ export default {
                         "bottom bottom bottom"
     grid-template-columns 200px 1fr 200px
 
-  .site-footer__links,
-  .site-footer__contact
-    text-align left
+    &__links,
+    &__contact
+      text-align left
 
-  .site-footer__link-item
-    line-height 1.47
+    &__link-item
+      line-height 1.47
 
 @media screen and (min-width: 1200px)
   .site-footer
