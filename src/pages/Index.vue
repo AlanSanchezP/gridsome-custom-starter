@@ -31,7 +31,7 @@
   <p class="home-introduction__text">
     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias iste et reiciendis cumque! Officiis voluptas, necessitatibus neque beatae tempore officia mollitia atque possimus in minus cumque. Ea obcaecati atque repellendus.
   </p>
-  <a href="#" class="site-button site-button--default">Dolorum harum hic</a>
+  <g-link to="/about" class="site-button site-button--default">Dolorum harum hic</g-link>
 </div>
 <div class="home-gradient home-gradient--logo-section">
   <g-image class="home-gradient-logo" src="~/assets/img/logo/logo.png" 
@@ -72,7 +72,7 @@
   <div class="content-collection">
     <CollectionItemAndModal v-for="item in $page.items.edges" v-bind:item="item.node" v-bind:key="item.node.id"/>
   </div>
-  <a href="#" class="site-button site-button--default">Leniti blanditiis!</a>
+  <g-link to="/items/" class="site-button site-button--default">Leniti blanditiis!</g-link>
 </div>
 </Layout>
 </template>
