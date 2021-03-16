@@ -53,7 +53,7 @@ export default {
     center-block()
 
   &__introduction
-    background $inverseTextColor
+    background-color $surfaceColor
     border-radius remify(7)
     font-size remify(16)
     line-height 1.31

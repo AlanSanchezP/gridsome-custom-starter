@@ -1,7 +1,7 @@
 <template>
     <header class="navigation-bar" v-bind:class="{'navigation-bar--use-hamburger': useHamburger, 'performing-responsive-evaluation': performingResponsiveEvaluation}">
       <g-link to="/" class="navigation-bar__main-logo">
-        <g-image src="~/assets/img/logo/logo-full.png" 
+        <g-image src="~/assets/img/logo/logo-full_over-surface.png" 
           alt="Logo accessibility description" 
           title="Logo"/>
       </g-link>
@@ -14,7 +14,7 @@
           <font-awesome-icon icon="times" />
         </button>
         <g-link v-if="useHamburger" class="navigation-bar__hamburger-logo" to="/">
-          <g-image src="~/assets/img/logo/logo-full-white.png" 
+          <g-image src="~/assets/img/logo/logo-full_over-primary.png" 
             alt="Logo accessibility description"
             title="Logo" />
         </g-link>

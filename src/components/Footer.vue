@@ -1,7 +1,7 @@
 <template>
   <footer class="site-footer">
       <g-link to="/" class="site-footer__logo">
-        <g-image src="~/assets/img/logo/logo-full-white.png" 
+        <g-image src="~/assets/img/logo/logo-full_over-primary.png" 
           alt="Accesibility description of logo" 
           title="Logo" />
       </g-link>

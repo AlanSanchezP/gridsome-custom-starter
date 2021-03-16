@@ -63,7 +63,7 @@ export default {
     center-block()
 
   &__description
-    background $inverseTextColor
+    background-color $surfaceColor
     border-radius remify(7)
     padding remify(40) remify(30)
     position relative
