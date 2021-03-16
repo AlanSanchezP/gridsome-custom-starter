@@ -11,7 +11,7 @@
     </div>
     <div class="about-page__content">
       <div class="about-page__content-section">
-        <g-image src="~/assets/img/logo/logo.png" alt="Accessibility description of photo" title="Photo" class="about-page__content-image"/>
+        <g-image src="~/assets/img/other/about_a.jpeg" alt="Accessibility description of photo" title="Photo" class="about-page__content-image"/>
         <p>
           Tempore, quibusdam non fugit animi magnam minus sapiente, saepe consequatur, totam alias inventore molestiae voluptatem voluptates maxime magni! Vel, iure voluptatem nesciunt commodi quod eos qui odio impedit. Excepturi, temporibus.Autem, officia corporis porro est laudantium atque laboriosam soluta cupiditate, illum amet ut optio nam cumque, assumenda illo voluptas possimus eos. Officiis facilis labore modi obcaecati, dolor in soluta expedita.
         </p>
@@ -20,7 +20,7 @@
         <p>
           Dolorum dolores nulla repellat ipsa rerum, explicabo cumque, voluptatum adipisci iusto error ad recusandae, voluptate ullam! Pariatur tempora quasi nesciunt possimus ab. Odio illo autem aperiam saepe provident animi. Qui sit quos perferendis totam natus saepe cupiditate sunt explicabo iste dolor praesentium aspernatur hic odio, repellendus deleniti, vel quam inventore eligendi omnis?
         </p>
-        <g-image src="~/assets/img/logo/logo.png" alt="Accessibility description of photo" title="Photo" class="about-page__content-image" />
+        <g-image src="~/assets/img/other/about_b.jpeg" alt="Accessibility description of photo" title="Photo" class="about-page__content-image" />
       </div>
     </div>
   </Layout>
@@ -37,7 +37,7 @@ export default {
 <style lang="stylus" scoped>
 .about-page
   &__cover
-    background-image url('~@/assets/img/logo/logo.png')
+    background-image url('~@/assets/img/covers/about.jpeg')
     height calc(80vh - 78px)
     min-height auto
     text-align center
@@ -108,6 +108,8 @@ export default {
 
         & ^[0]__content-image
           margin remify(40) remify(100) 0 remify(100)
+          max-width 200px
+          width 100%
 
 @media screen and (min-width: 682px)
   .about-page
@@ -133,29 +135,26 @@ export default {
         p
           margin 2.5em 0 0 0
 
-        & ^[0]__content-image
-          flex-grow 1
-
         &:nth-of-type(1) 
           & ^[0]__content-image
+            flex-basis 30%
             margin-bottom 0
             margin-left remify(-121)
             margin-right 2rem
-            max-width initial
+            max-width 420px
             order 0
             width initial
 
-          p
-            flex-basis 70%
-
         &:nth-of-type(2) 
           & ^[0]__content-image
+            flex-basis 30%
             margin-left 3rem
             margin-right remify(-60)
+            max-width 280px
+            width initial
 
           p
-            flex-basis 72%
-            margin-left remify(60)
+            margin-left remify(30)
             margin-top remify(80)
 
 @media screen and (min-width: $bigScreenAt)
@@ -170,4 +169,13 @@ export default {
     &__content
       max-width initial
       width 75%
+
+      &-section
+          &:nth-of-type(1) 
+            & ^[0]__content-image
+              max-width 35vw
+
+          &:nth-of-type(2) 
+            & ^[0]__content-image
+              max-width 25vw
 </style>

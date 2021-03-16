@@ -2,7 +2,7 @@
 <Layout>
   <Swiper class="home-carousel" ref="mySwiper" :options="swiperOptions">
     <!-- TODO: Implement a carousel here -->
-    <SwiperSlide class="home-carousel-item vertical-center cover">
+    <SwiperSlide class="home-carousel-item vertical-center cover home-carousel-item--first">
       <div class="home-carousel-item__div" data-enllax-type="foreground" data-enllax-ratio=".5">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Laborum praesentium quidem nisi!</h2>
@@ -13,7 +13,7 @@
         </div>
       </div>
     </SwiperSlide>
-    <SwiperSlide class="home-carousel-item vertical-center cover">
+    <SwiperSlide class="home-carousel-item vertical-center cover home-carousel-item--second">
       <div class="home-carousel-item__div" data-enllax-type="foreground" data-enllax-ratio=".5">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Aipisicing elit, tenetur laborum ex</h2>
@@ -132,10 +132,8 @@ export default {
 <style lang="stylus" scoped>
 .home-carousel
   color white
-  background-color $primaryThemeColor
   height calc(95vh - 72px)
   min-height auto
-  padding 20px 0
 
   @media screen and (orientation: portrait)
     max-height "min(76vh, 500px)" % null
@@ -164,6 +162,12 @@ export default {
     display flex
     height 100%
     overflow hidden
+
+    &--first
+      background-image url('~@/assets/img/covers/cover_d.jpeg')
+
+    &--second
+      background-image url('~@/assets/img/covers/cover_e.jpeg')
 
     &__div
       width 80%
