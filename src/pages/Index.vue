@@ -39,29 +39,25 @@
           title="Logo" aria-hidden="true"/>
   <div class="home-gradient__items" data-enllax-type="foreground" data-enllax-ratio=".2">
     <div class="home-gradient__item">
-      <g-image src="~/assets/img/logo/logo.png" 
-        alt="Accessibility description" title="Icon" aria-hidden="true" />
+      <font-awesome-icon icon="rocket" class="home-gradient__item-icon" />
       <p>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit, suscipit culpa ducimus expedita.
       </p>
     </div>
     <div class="home-gradient__item">
-      <g-image src="~/assets/img/logo/logo.png" 
-        alt="Accessibility description" title="Icon" aria-hidden="true" />
+      <font-awesome-icon icon="star" class="home-gradient__item-icon" />
       <p>
         A animi incidunt praesentium consectetur adipisicing elit. Voluptatibus tempore ex quam architecto.
       </p>
     </div>
     <div class="home-gradient__item">
-      <g-image src="~/assets/img/logo/logo.png" 
-        alt="Accessibility description" title="Icon" aria-hidden="true" />
+      <font-awesome-icon icon="user-shield" class="home-gradient__item-icon" />
       <p>
         Quia voluptates animi inventore reiciendis accusamus officiis necessitatibus placeat commodi maiores.
       </p>
     </div>
     <div class="home-gradient__item">
-      <g-image src="~/assets/img/logo/logo.png" 
-        alt="Accessibility description" title="Icon" aria-hidden="true" />
+      <font-awesome-icon icon="comments" class="home-gradient__item-icon" />
       <p>
         Tenetur nulla quis harum, perferendis nesciunt quod porro aut labore? Doloribus ab voluptas earum.
       </p>
@@ -248,8 +244,8 @@ export default {
     &:nth-child(n + 3)
       margin-top remify(42)
 
-    img
-      height remify(70)
+    &-icon
+      height remify(50)
       width @height
 
     p
