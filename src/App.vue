@@ -100,6 +100,10 @@ export default {
 <style lang="stylus" scoped>
 #app
   margin 0
-  overflow hidden
   padding 0
+  position relative
+
+#main-content
+  overflow-x hidden
+  width 100%
 </style>

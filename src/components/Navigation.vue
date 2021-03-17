@@ -83,6 +83,9 @@ function checkResponsive() {
       this.useHamburger = false;
     }
     this.performingResponsiveEvaluation = false;
+
+    // TODO: Prevent content from getting cropped if browser doesn't support
+    //  position: sticky
   });
 }
 
@@ -115,6 +118,7 @@ export default {
       this.showSidebarMenu = true;
     },
     closeMenu() {
+      // TODO: Close on ESC key press
       if (!this.useHamburger) return;
       if (!this.showSidebarMenu) return;
       this.showSidebarMenu = false;
@@ -144,19 +148,8 @@ export default {
 </script>
 
 <style lang="stylus">
-$thinNavbarHeight = 56px
-$desktopScreenBreakpoint = 968px
-$desktopScreenNavbarHeight = 78px
-
-// TODO: Find a better way to handle this marginm-top
-
 body.noscroll
   overflow hidden !important
-
-#main-content
-  margin-top $thinNavbarHeight
-  @media screen and (min-width: $desktopScreenBreakpoint)
-    margin-top $desktopScreenNavbarHeight
 </style>
 
 <style lang="stylus" scoped>
@@ -194,6 +187,7 @@ $hamburgerShadowColor = $defaultTextColor
   height $thinNavbarHeight
   left 0
   position fixed
+  position sticky
   top 0
   width 100%
   z-index $navbarZindex
