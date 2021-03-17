@@ -1,9 +1,10 @@
 <template>
 <Layout>
   <Swiper class="home-carousel" ref="mySwiper" :options="swiperOptions">
-    <!-- TODO: Implement a carousel here -->
-    <SwiperSlide class="home-carousel-item vertical-center cover home-carousel-item--first">
-      <div class="home-carousel-item__div" data-enllax-type="foreground" data-enllax-ratio=".5">
+    <!-- FIX: G-image gets blurred on duplicate slides -->
+    <SwiperSlide class="home-carousel-item">
+      <g-image src="~/assets/img/covers/cover_d.jpeg" class="home-carousel-item-cover cover" />
+      <div class="home-carousel-item__div  vertical-center">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Laborum praesentium quidem nisi!</h2>
           <p class="home-carousel-item__text">
@@ -13,14 +14,27 @@
         </div>
       </div>
     </SwiperSlide>
-    <SwiperSlide class="home-carousel-item vertical-center cover home-carousel-item--second">
-      <div class="home-carousel-item__div" data-enllax-type="foreground" data-enllax-ratio=".5">
+    <SwiperSlide class="home-carousel-item">
+      <g-image src="~/assets/img/covers/cover_e.jpeg" class="home-carousel-item-cover cover" />
+      <div class="home-carousel-item__div vertical-center">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Aipisicing elit, tenetur laborum ex</h2>
           <p class="home-carousel-item__text">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. A facilis maxime esse distinctio inventore, consequatur iure ipsum laboriosam suscipit mollitia possimus autem voluptatum fugit tenetur minus expedita illum, nam dignissimos!
+            Maiores distinctio, veritatis officia saepe consectetur ad ducimus inventore nemo ex nesciunt cumque soluta aperiam omnis consequatur perferendis corrupti. Saepe non dicta omnis tempore corporis alias obcaecati voluptate fugiat iste libero eaque consequatur, maxime.
           </p>
           <a href="#" class="site-button site-button--transparent-inverse">Officia rerum</a>
+        </div>
+      </div>
+    </SwiperSlide>
+    <SwiperSlide class="home-carousel-item">
+      <g-image src="~/assets/img/covers/cover_f.jpeg" class="home-carousel-item-cover cover" />
+      <div class="home-carousel-item__div  vertical-center">
+        <div class="home-carousel-item__content">
+          <h2 class="home-carousel-item__title">Assumenda ea mollitia in eos vero eligendi</h2>
+          <p class="home-carousel-item__text">
+            Reprehenderit nesciunt, sint explicabo quam animi, necessitatibus nemo vel maxime perferendis est nisi! Iure, quaerat voluptates consectetur error ipsum exercitationem deleniti dolore incidunt sit rem dignissimos nihil! Quo molestias deleniti nulla ullam minima placeat rem.
+          </p>
+          <a href="#" class="site-button site-button--transparent-inverse">Laudantium possimus</a>
         </div>
       </div>
     </SwiperSlide>
@@ -119,6 +133,7 @@ export default {
   },
   computed: {
     swiper() {
+      // TODO: Dynamically resize height if content doesn't fit
       return this.$refs.mySwiper.$swiper;
     }
   }
@@ -129,10 +144,16 @@ export default {
 .home-carousel
   color white
   height calc(95vh - 72px)
-  min-height auto
 
   @media screen and (orientation: portrait)
     max-height "min(76vh, 500px)" % null
+
+  @media screen and (orientation: landscape) and (max-height: 420px)
+    height auto
+
+  @media screen and (max-width: 300px)
+    .swiper-button-prev
+      left -100vw !important
 
   .swiper-button-next,
   .swiper-button-prev
@@ -155,21 +176,26 @@ export default {
     right remify(12)
 
   &-item
-    display flex
     height 100%
     overflow hidden
+    position relative
 
-    &--first
-      background-image url('~@/assets/img/covers/cover_d.jpeg')
-
-    &--second
-      background-image url('~@/assets/img/covers/cover_e.jpeg')
+    &-cover
+      bottom 0
+      height 100%
+      left 0
+      position absolute
+      right 0
+      top 0
+      width 100%
 
     &__div
-      width 80%
-      min-width 288px
-      text-align left
+      background-image "linear-gradient(to right, rgba(0, 0, 0, 0.8), max(60%, 220px), transparent)" % null
+      justify-content start
+      height 100%
+      padding remify(30) 10vw
       position relative
+      text-align left
       z-index 2
 
     &__content
