@@ -20,7 +20,11 @@ function addStyleResource (rule) {
 
 module.exports = {
   siteName: 'Gridsome',
-  plugins: [],
+  plugins: [
+    {
+      use: 'gridsome-plugin-modal'
+    }
+  ],
   templates: {
     Item: '/items/:id'
   },

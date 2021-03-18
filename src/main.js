@@ -8,7 +8,6 @@ import { faBars, faPhoneAlt, faEnvelope, faCircleNotch,
   faUserShield, faComments } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import VModal from 'vue-js-modal';
 
 import '~/assets/styl/global.styl'
 import DefaultLayout from '~/layouts/Default.vue'
@@ -22,6 +21,5 @@ export default function (Vue, { router, head, isClient }) {
   // Set default layout as a global component
   Vue.component('Layout', DefaultLayout);
   Vue.component('font-awesome-icon', FontAwesomeIcon);
-  Vue.use(VModal);
   Vue.directive('offClick', OffClickDirective);
 }
