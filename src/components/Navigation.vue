@@ -1,5 +1,5 @@
 <template>
-    <header class="navigation-bar" v-bind:class="{'navigation-bar--use-hamburger': useHamburger, 'performing-responsive-evaluation': performingResponsiveEvaluation}">
+    <header ref="rootNavbar" class="navigation-bar" v-bind:class="{'navigation-bar--use-hamburger': useHamburger, 'performing-responsive-evaluation': performingResponsiveEvaluation}">
       <g-link to="/" class="navigation-bar__main-logo">
         <g-image src="~/assets/img/logo/logo-full_over-surface.png" 
           alt="Logo accessibility description" 
@@ -38,7 +38,9 @@ import {OffClickHandlerBuilder} from '~/OffClickDirective';
 const RESOLUTIONS_MAPPING = new Map();
 const CALCULATING = -1;
 const NOT_USE_HAMBURGER = 0;
-const USE_HAMBURGER = 1
+const USE_HAMBURGER = 1;
+
+var isSticky = true;
 
 function checkResponsive() {
   if (!this) {
@@ -46,12 +48,11 @@ function checkResponsive() {
     return;
   }
   const WINDOW_SIZE = `w${window.screen.availWidth}h${window.screen.availHeight}`;
-
   // This prevents the need to shedule more things than needed
   //  and prevents double checks (onresize triggers more than once for some reason,
   //  at least on developer tools)  
   if (RESOLUTIONS_MAPPING.has(WINDOW_SIZE)) {
-    let storedValue = RESOLUTIONS_MAPPING.get(WINDOW_SIZE);
+    const storedValue = RESOLUTIONS_MAPPING.get(WINDOW_SIZE);
     if (storedValue === CALCULATING) return;
     else if (storedValue === USE_HAMBURGER) {
       this.useHamburger = true;
@@ -71,7 +72,7 @@ function checkResponsive() {
   // It's necessary to schedule this so that Vue can update the DOM.
   //  Otherwise, this.$refs.menu.offsetTop value won't update and the check won't work
   this.$nextTick(function scheduledCheck() {
-    var childHeight = this.$refs.menu.firstChild.offsetHeight;
+    const childHeight = this.$refs.menu.firstChild.offsetHeight;
     // Check if elements got separated into 2 or more rows.
     //  Using 1.2 factor to allow human-caused margin overflows (?)
     if (this.$refs.menu.offsetHeight > childHeight * 1.2) {
@@ -82,10 +83,16 @@ function checkResponsive() {
       this.closeMenu();
       this.useHamburger = false;
     }
+
     this.performingResponsiveEvaluation = false;
 
-    // TODO: Prevent content from getting cropped if browser doesn't support
-    //  position: sticky
+    if (isSticky) return;
+
+    // For this to work, it is needed that the next sibling doesn't add
+    //  any custom margin-top
+    const nextSibling = this.$refs.rootNavbar.nextSibling;
+    const navbarHeight = this.$refs.rootNavbar.offsetHeight;
+    nextSibling.style.marginTop = `${navbarHeight}px`;
   });
 }
 
@@ -102,7 +109,10 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', checkResponsive.bind(this), true);
+    const navbarPositionType = getComputedStyle(this.$refs.rootNavbar).position;
+    isSticky = navbarPositionType === 'sticky';
     // If dispatching right away, something weird happens with menu height
+    // FIX: In limit resolutions (~414px it seems), first validation fails and menu crashes
     this.$nextTick(() => window.dispatchEvent(new Event('resize')));
   },
   beforeDestroy() {
