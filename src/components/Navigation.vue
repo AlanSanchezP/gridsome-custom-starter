@@ -34,13 +34,9 @@
 <script>
 import {OffClickHandlerBuilder} from '~/OffClickDirective';
 
-// keys: string using the format w<WIDTH>h<HEIGHT> : w1024h720
-const RESOLUTIONS_MAPPING = new Map();
 const CALCULATING = -1;
 const NOT_USE_HAMBURGER = 0;
 const USE_HAMBURGER = 1;
-
-var isSticky = true;
 
 function checkResponsive() {
   if (!this) {
@@ -51,8 +47,8 @@ function checkResponsive() {
   // This prevents the need to shedule more things than needed
   //  and prevents double checks (onresize triggers more than once for some reason,
   //  at least on developer tools)  
-  if (RESOLUTIONS_MAPPING.has(WINDOW_SIZE)) {
-    const storedValue = RESOLUTIONS_MAPPING.get(WINDOW_SIZE);
+  if (this.RESOLUTIONS_MAPPING.has(WINDOW_SIZE)) {
+    const storedValue = this.RESOLUTIONS_MAPPING.get(WINDOW_SIZE);
     if (storedValue === CALCULATING) return;
     else if (storedValue === USE_HAMBURGER) {
       this.useHamburger = true;
@@ -65,7 +61,7 @@ function checkResponsive() {
     return;
   }
 
-  RESOLUTIONS_MAPPING.set(WINDOW_SIZE, CALCULATING);
+  this.RESOLUTIONS_MAPPING.set(WINDOW_SIZE, CALCULATING);
   this.useHamburger = false;
   this.performingResponsiveEvaluation = true;
 
@@ -76,17 +72,17 @@ function checkResponsive() {
     // Check if elements got separated into 2 or more rows.
     //  Using 1.2 factor to allow human-caused margin overflows (?)
     if (this.$refs.menu.offsetHeight > childHeight * 1.2) {
-      RESOLUTIONS_MAPPING.set(WINDOW_SIZE, USE_HAMBURGER);
+      this.RESOLUTIONS_MAPPING.set(WINDOW_SIZE, USE_HAMBURGER);
       this.useHamburger = true;
     } else {
-      RESOLUTIONS_MAPPING.set(WINDOW_SIZE, NOT_USE_HAMBURGER);
+      this.RESOLUTIONS_MAPPING.set(WINDOW_SIZE, NOT_USE_HAMBURGER);
       this.closeMenu();
       this.useHamburger = false;
     }
 
     this.performingResponsiveEvaluation = false;
 
-    if (isSticky) return;
+    if (this.isSticky) return;
 
     // For this to work, it is needed that the next sibling doesn't add
     //  any custom margin-top
@@ -107,16 +103,22 @@ export default {
     */
     routes: {type: Array, required: true}
   },
+  created() {
+    this.checkResponsive = checkResponsive.bind(this);
+    this.isSticky = true;
+    // keys: string using the format w<WIDTH>h<HEIGHT> : w1024h720
+    this.RESOLUTIONS_MAPPING = new Map();
+  },
   mounted() {
-    window.addEventListener('resize', checkResponsive.bind(this), true);
+    window.addEventListener('resize', this.checkResponsive, true);
     const navbarPositionType = getComputedStyle(this.$refs.rootNavbar).position;
-    isSticky = navbarPositionType === 'sticky';
+    this.isSticky = (navbarPositionType === 'sticky');
     // If dispatching right away, something weird happens with menu height
     // FIX: In limit resolutions (~414px it seems), first validation fails and menu crashes
     this.$nextTick(() => window.dispatchEvent(new Event('resize')));
   },
   beforeDestroy() {
-    window.removeEventListener('resize', checkResponsive.bind(this), true);
+    window.removeEventListener('resize', this.checkResponsive, true);
   },
   methods: {
     showMenu() {

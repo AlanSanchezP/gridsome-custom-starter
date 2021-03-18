@@ -120,6 +120,8 @@ function checkCarouselHeight() {
     return;
   }
 
+  this.initialCheckIsDone = true;
+
   const activeIndex = this.$refs.indexCarousel.$swiper.activeIndex;
   const activeSlideElem = this.$refs.indexCarousel.$swiper.slides[activeIndex];
   const activeSlideHeight = activeSlideElem.querySelector('.home-carousel-item__content').offsetHeight;
@@ -138,11 +140,21 @@ export default {
     SwiperSlide,
     CollectionItemAndModal
   },
+  created() {
+    this.initialCheckIsDone = false;
+    this.checkCarouselHeight = checkCarouselHeight.bind(this);
+  },
   mounted() {
-    window.addEventListener('resize', checkCarouselHeight.bind(this), true);
+    this.checkCarouselHeight = checkCarouselHeight.bind(this);
+    window.addEventListener('resize', this.checkCarouselHeight, true);
+    this.$nextTick(() => {
+      if (!this.initialCheckIsDone) {
+        window.dispatchEvent(new Event('resize'));
+      }
+    });
   },
   beforeDestroy() {
-    window.removeEventListener('resize', checkCarouselHeight.bind(this), true);
+    window.removeEventListener('resize', this.checkCarouselHeight, true);
   },
   data() {
     return {
