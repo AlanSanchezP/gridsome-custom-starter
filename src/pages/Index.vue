@@ -1,6 +1,9 @@
 <template>
 <Layout>
-  <Swiper class="home-carousel" ref="mySwiper" :options="swiperOptions">
+  <div ref="aux" class="home-carousel__aux" aria-hidden="true"/>
+  <Swiper class="home-carousel" ref="indexCarousel" :options="swiperOptions"
+    @slideChangeTransitionEnd="onSlideChange"
+    :class="{'home-carousel--fixed-height': useFixedHeight}">
     <!-- FIX: G-image gets blurred on duplicate slides -->
     <SwiperSlide class="home-carousel-item">
       <g-image src="~/assets/img/covers/cover_d.jpeg" class="home-carousel-item-cover cover" />
@@ -41,53 +44,53 @@
     <button type="button" class="swiper-button-next" slot="button-next" />
     <button type="button" class="swiper-button-prev" slot="button-prev" />
   </Swiper>
-<div class="home-introduction">
-  <p class="home-introduction__text">
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias iste et reiciendis cumque! Officiis voluptas, necessitatibus neque beatae tempore officia mollitia atque possimus in minus cumque. Ea obcaecati atque repellendus.
-  </p>
-  <g-link to="/about" class="site-button site-button--default">Dolorum harum hic</g-link>
-</div>
-<div class="home-gradient home-gradient--logo-section">
-  <g-image class="home-gradient-logo" src="~/assets/img/logo/logo.png" 
-          alt="Logo description" 
-          title="Logo" aria-hidden="true"/>
-  <div class="home-gradient__items" data-enllax-type="foreground" data-enllax-ratio=".2">
-    <div class="home-gradient__item">
-      <font-awesome-icon icon="rocket" class="home-gradient__item-icon" />
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit, suscipit culpa ducimus expedita.
-      </p>
-    </div>
-    <div class="home-gradient__item">
-      <font-awesome-icon icon="star" class="home-gradient__item-icon" />
-      <p>
-        A animi incidunt praesentium consectetur adipisicing elit. Voluptatibus tempore ex quam architecto.
-      </p>
-    </div>
-    <div class="home-gradient__item">
-      <font-awesome-icon icon="user-shield" class="home-gradient__item-icon" />
-      <p>
-        Quia voluptates animi inventore reiciendis accusamus officiis necessitatibus placeat commodi maiores.
-      </p>
-    </div>
-    <div class="home-gradient__item">
-      <font-awesome-icon icon="comments" class="home-gradient__item-icon" />
-      <p>
-        Tenetur nulla quis harum, perferendis nesciunt quod porro aut labore? Doloribus ab voluptas earum.
-      </p>
+  <div class="home-introduction">
+    <p class="home-introduction__text">
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias iste et reiciendis cumque! Officiis voluptas, necessitatibus neque beatae tempore officia mollitia atque possimus in minus cumque. Ea obcaecati atque repellendus.
+    </p>
+    <g-link to="/about" class="site-button site-button--default">Dolorum harum hic</g-link>
+  </div>
+  <div class="home-gradient home-gradient--logo-section">
+    <g-image class="home-gradient-logo" src="~/assets/img/logo/logo.png"
+            alt="Logo description"
+            title="Logo" aria-hidden="true"/>
+    <div class="home-gradient__items" data-enllax-type="foreground" data-enllax-ratio=".2">
+      <div class="home-gradient__item">
+        <font-awesome-icon icon="rocket" class="home-gradient__item-icon" />
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit, suscipit culpa ducimus expedita.
+        </p>
+      </div>
+      <div class="home-gradient__item">
+        <font-awesome-icon icon="star" class="home-gradient__item-icon" />
+        <p>
+          A animi incidunt praesentium consectetur adipisicing elit. Voluptatibus tempore ex quam architecto.
+        </p>
+      </div>
+      <div class="home-gradient__item">
+        <font-awesome-icon icon="user-shield" class="home-gradient__item-icon" />
+        <p>
+          Quia voluptates animi inventore reiciendis accusamus officiis necessitatibus placeat commodi maiores.
+        </p>
+      </div>
+      <div class="home-gradient__item">
+        <font-awesome-icon icon="comments" class="home-gradient__item-icon" />
+        <p>
+          Tenetur nulla quis harum, perferendis nesciunt quod porro aut labore? Doloribus ab voluptas earum.
+        </p>
+      </div>
     </div>
   </div>
-</div>
-<div class="starred-content">
-  <h2 class="starred-content__title">Ipsam ea vero quidem ut</h2>
-  <p class="starred-content__description">
-    Commodi possimus quas aut voluptatum quod iure, voluptate, quasi veniam ea iste, similique laudantium molestiae provident nihil corporis quae excepturi. Inventore, nulla!
-  </p>
-  <div class="content-collection">
-    <CollectionItemAndModal v-for="item in $page.items.edges" v-bind:item="item.node" v-bind:key="item.node.id"/>
+  <div class="starred-content">
+    <h2 class="starred-content__title">Ipsam ea vero quidem ut</h2>
+    <p class="starred-content__description">
+      Commodi possimus quas aut voluptatum quod iure, voluptate, quasi veniam ea iste, similique laudantium molestiae provident nihil corporis quae excepturi. Inventore, nulla!
+    </p>
+    <div class="content-collection">
+      <CollectionItemAndModal v-for="item in $page.items.edges" v-bind:item="item.node" v-bind:key="item.node.id"/>
+    </div>
+    <g-link to="/items/" class="site-button site-button--default">Leniti blanditiis!</g-link>
   </div>
-  <g-link to="/items/" class="site-button site-button--default">Leniti blanditiis!</g-link>
-</div>
 </Layout>
 </template>
 
@@ -111,6 +114,21 @@ query {
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import CollectionItemAndModal from '../components/CollectionItemAndModal';
 
+function checkCarouselHeight() {
+  if (!this) {
+    console.warn("Call this function using checkCarouselHeight.call(this)");
+    return;
+  }
+
+  const activeIndex = this.$refs.indexCarousel.$swiper.activeIndex;
+  const activeSlideElem = this.$refs.indexCarousel.$swiper.slides[activeIndex];
+  const activeSlideHeight = activeSlideElem.querySelector('.home-carousel-item__content').offsetHeight;
+  const remSize = parseInt(getComputedStyle(document.documentElement).fontSize);
+  const referenceHeight = this.$refs.aux.offsetHeight - (30 / remSize); // includes padding
+
+  this.useFixedHeight = activeSlideHeight < referenceHeight;
+}
+
 export default {
   metaInfo: {
     title: 'Welcome to my project'
@@ -120,6 +138,12 @@ export default {
     SwiperSlide,
     CollectionItemAndModal
   },
+  mounted() {
+    window.addEventListener('resize', checkCarouselHeight.bind(this), true);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', checkCarouselHeight.bind(this), true);
+  },
   data() {
     return {
       swiperOptions: {
@@ -128,13 +152,18 @@ export default {
           prevEl: '.swiper-button-prev'
         },
         loop: true
-      }
+      },
+      useFixedHeight: true
+    }
+  },
+  methods: {
+    onSlideChange() {
+      checkCarouselHeight.call(this);
     }
   },
   computed: {
     swiper() {
-      // TODO: Dynamically resize height if content doesn't fit
-      return this.$refs.mySwiper.$swiper;
+      return this.$refs.indexCarousel.$swiper;
     }
   }
 }
@@ -143,13 +172,16 @@ export default {
 <style lang="stylus" scoped>
 .home-carousel
   color white
-  height calc(95vh - 72px)
 
-  @media screen and (orientation: portrait)
-    max-height "min(76vh, 500px)" % null
+  &__aux, &--fixed-height
+    height calc(95vh - 72px)
 
-  @media screen and (orientation: landscape) and (max-height: 420px)
-    height auto
+    @media screen and (orientation: portrait)
+      max-height "min(76vh, 500px)" % null
+
+  &__aux
+    position fixed
+    z-index -1000
 
   @media screen and (max-width: 300px)
     .swiper-button-prev
