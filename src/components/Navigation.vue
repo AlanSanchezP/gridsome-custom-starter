@@ -1,34 +1,37 @@
 <template>
-    <header ref="rootNavbar" class="navigation-bar" v-bind:class="{'navigation-bar--use-hamburger': useHamburger, 'performing-responsive-evaluation': performingResponsiveEvaluation}">
-      <g-link to="/" class="navigation-bar__main-logo">
-        <g-image src="~/assets/img/logo/logo-full_over-surface.png" 
-          alt="Logo accessibility description" 
-          title="Logo"/>
-      </g-link>
-      <button type="button" class="navigation-bar__menu-trigger" @click="showMenu" ref="menuTrigger">
-        <font-awesome-icon icon="bars"/>
-        <span>Display menu</span>
+  <header ref="rootNavbar"
+    class="navigation-bar"
+    @keyup.esc="closeMenu"
+    v-bind:class="{'navigation-bar--use-hamburger': useHamburger, 'performing-responsive-evaluation': performingResponsiveEvaluation}">
+    <g-link to="/" class="navigation-bar__main-logo">
+      <g-image src="~/assets/img/logo/logo-full_over-surface.png"
+        alt="Logo accessibility description"
+        title="Logo"/>
+    </g-link>
+    <button type="button" class="navigation-bar__menu-trigger" @click="showMenu" ref="menuTrigger">
+      <font-awesome-icon icon="bars"/>
+      <span>Display menu</span>
+    </button>
+    <div class="navigation-bar__menu-container" v-bind:class="{'navigation-bar__menu-container--visible': showSidebarMenu}"  v-offClick="offClickHandler">
+      <button v-if="useHamburger" type="button" class="navigation-bar__close-menu" @click="closeMenu">
+        <font-awesome-icon icon="times" />
       </button>
-      <div class="navigation-bar__menu-container" v-bind:class="{'navigation-bar__menu-container--visible': showSidebarMenu}"  v-offClick="offClickHandler">
-        <button v-if="useHamburger" type="button" class="navigation-bar__close-menu" @click="closeMenu">
-          <font-awesome-icon icon="times" />
-        </button>
-        <g-link v-if="useHamburger" class="navigation-bar__hamburger-logo" to="/">
-          <g-image src="~/assets/img/logo/logo-full_over-primary.png" 
-            alt="Logo accessibility description"
-            title="Logo" />
+      <g-link v-if="useHamburger" class="navigation-bar__hamburger-logo" to="/">
+        <g-image src="~/assets/img/logo/logo-full_over-primary.png"
+          alt="Logo accessibility description"
+          title="Logo" />
+      </g-link>
+      <nav class="navigation-bar__menu" ref="menu">
+        <g-link v-for="(route, index) in routes" :key="`route-${index}`"
+          :to="route.path"
+          :exact="route.matchExact != false"
+          class="navigation-bar__menu-link"
+          active-class="navigation-bar__menu-link--active">
+          {{route.text}}
         </g-link>
-        <nav class="navigation-bar__menu" ref="menu">
-          <g-link v-for="(route, index) in routes" :key="`route-${index}`"
-            :to="route.path"
-            :exact="route.matchExact != false"
-            class="navigation-bar__menu-link"
-            active-class="navigation-bar__menu-link--active">
-            {{route.text}}
-          </g-link>
-        </nav>
-      </div>
-    </header>
+      </nav>
+    </div>
+  </header>
 </template>
 
 <script>
@@ -130,7 +133,6 @@ export default {
       this.showSidebarMenu = true;
     },
     closeMenu() {
-      // TODO: Close on ESC key press
       if (!this.useHamburger) return;
       if (!this.showSidebarMenu) return;
       this.showSidebarMenu = false;
