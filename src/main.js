@@ -5,7 +5,7 @@ import 'swiper/css/swiper.min.css'; // TODO: Replace with minimal styles when up
 import {library} from '@fortawesome/fontawesome-svg-core';
 import { faBars, faPhoneAlt, faEnvelope, faCircleNotch, 
   faCheck, faTimes, faStar, faRocket, 
-  faUserShield, faComments } from '@fortawesome/free-solid-svg-icons';
+  faUserShield, faComments, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -15,7 +15,7 @@ import OffClickDirective from '~/OffClickDirective'
 
 library.add(faBars, faPhoneAlt, faEnvelope, faTimes,
   faFacebookF, faInstagram, faTwitter, faCircleNotch, faCheck,
-  faStar, faRocket, faUserShield, faComments);
+  faStar, faRocket, faUserShield, faComments, faAngleDoubleRight);
 
 export default function (Vue, { router, head, isClient }) {
   // Set default layout as a global component

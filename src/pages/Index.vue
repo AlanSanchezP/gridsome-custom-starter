@@ -44,6 +44,7 @@
     <button type="button" class="swiper-button-next" slot="button-next" />
     <button type="button" class="swiper-button-prev" slot="button-prev" />
   </Swiper>
+  <ScrollForMore ref="scrollForMore" />
   <div class="home-introduction">
     <p class="home-introduction__text">
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias iste et reiciendis cumque! Officiis voluptas, necessitatibus neque beatae tempore officia mollitia atque possimus in minus cumque. Ea obcaecati atque repellendus.
@@ -113,6 +114,7 @@ query {
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import CollectionItemAndModal from '../components/CollectionItemAndModal';
+import ScrollForMore from '../components/ScrollForMore';
 
 function checkCarouselHeight() {
   if (!this) {
@@ -129,6 +131,7 @@ function checkCarouselHeight() {
   const referenceHeight = this.$refs.aux.offsetHeight - (30 / remSize); // includes padding
 
   this.useFixedHeight = activeSlideHeight < referenceHeight;
+  this.$nextTick(() => this.$refs.scrollForMore.forceEvaluation());
 }
 
 export default {
@@ -138,7 +141,8 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
-    CollectionItemAndModal
+    CollectionItemAndModal,
+    ScrollForMore
   },
   created() {
     this.initialCheckIsDone = false;
