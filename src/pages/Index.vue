@@ -6,7 +6,7 @@
     :class="{'home-carousel--fixed-height': useFixedHeight}">
     <!-- FIX: G-image gets blurred on duplicate slides -->
     <SwiperSlide class="home-carousel-item">
-      <g-image src="~/assets/img/covers/cover_d.jpeg" class="home-carousel-item-cover cover" />
+      <g-image src="~/assets/img/covers/cover_d.jpeg" class="home-carousel-item__cover cover" />
       <div class="home-carousel-item__div  vertical-center">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Laborum praesentium quidem nisi!</h2>
@@ -18,7 +18,7 @@
       </div>
     </SwiperSlide>
     <SwiperSlide class="home-carousel-item">
-      <g-image src="~/assets/img/covers/cover_e.jpeg" class="home-carousel-item-cover cover" />
+      <g-image src="~/assets/img/covers/cover_e.jpeg" class="home-carousel-item__cover cover" />
       <div class="home-carousel-item__div vertical-center">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Aipisicing elit, tenetur laborum ex</h2>
@@ -30,7 +30,7 @@
       </div>
     </SwiperSlide>
     <SwiperSlide class="home-carousel-item">
-      <g-image src="~/assets/img/covers/cover_f.jpeg" class="home-carousel-item-cover cover" />
+      <g-image src="~/assets/img/covers/cover_f.jpeg" class="home-carousel-item__cover cover" />
       <div class="home-carousel-item__div  vertical-center">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Assumenda ea mollitia in eos vero eligendi</h2>
@@ -124,8 +124,8 @@ function checkCarouselHeight() {
 
   this.initialCheckIsDone = true;
 
-  const activeIndex = this.$refs.indexCarousel.$swiper.activeIndex;
-  const activeSlideElem = this.$refs.indexCarousel.$swiper.slides[activeIndex];
+  const activeIndex = this.swiper.activeIndex;
+  const activeSlideElem = this.swiper.slides[activeIndex];
   const activeSlideHeight = activeSlideElem.querySelector('.home-carousel-item__content').offsetHeight;
   const remSize = parseInt(getComputedStyle(document.documentElement).fontSize);
   const referenceHeight = this.$refs.aux.offsetHeight - (30 / remSize); // includes padding
@@ -174,6 +174,16 @@ export default {
   },
   methods: {
     onSlideChange() {
+      const effectiveSlidesCount = this.$refs.indexCarousel.$children.length;
+      if (this.swiper.activeIndex == 0 ||
+        this.swiper.activeIndex > effectiveSlidesCount) {
+        const slide = this.swiper.slides[this.swiper.activeIndex];
+        const slideCover = slide.querySelector('.home-carousel-item__cover');
+
+        if (slideCover.src.includes('data:')) {
+          slideCover.srcset = slideCover.dataset.srcset;
+        }
+      }
       checkCarouselHeight.call(this);
     }
   },
@@ -228,7 +238,7 @@ export default {
     overflow hidden
     position relative
 
-    &-cover
+    &__cover
       bottom 0
       height 100%
       left 0
