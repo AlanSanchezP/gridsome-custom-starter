@@ -44,8 +44,8 @@
     <button type="button" class="swiper-button-next" slot="button-next" />
     <button type="button" class="swiper-button-prev" slot="button-prev" />
   </Swiper>
-  <ScrollForMore ref="scrollForMore" />
-  <div class="home-introduction">
+  <ScrollForMore ref="scrollForMore" anchorRef="introduction" />
+  <div class="home-introduction" ref="introduction">
     <p class="home-introduction__text">
       Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias iste et reiciendis cumque! Officiis voluptas, necessitatibus neque beatae tempore officia mollitia atque possimus in minus cumque. Ea obcaecati atque repellendus.
     </p>
@@ -269,8 +269,8 @@ export default {
     opacity 0
 
 .home-introduction
-  margin-top unit(89/18, 'em')
-  margin-bottom unit(127/18, 'em')
+  padding-top unit(89/18, 'em')
+  padding-bottom unit(127/18, 'em')
   max-width 655px
   text-align center
   width 90%

@@ -1,9 +1,12 @@
 <template>
   <div class="scroll-for-more">
-    <div class="scroll-for-more__content" v-if="showIndicator">
+    <transition name="fade">
+    <div class="scroll-for-more__content" v-show="showIndicator"
+      @click="scrollToAnchor">
       <span>Scroll for more</span>
       <font-awesome-icon class="scroll-for-more__indicator" :icon="['fas', 'angle-double-right']" />
     </div>
+    </transition>
   </div>
 </template>
 
@@ -13,17 +16,34 @@ function checkScrollPosition() {
     console.warn("Call this function using checkScrollPosition.call(this)");
     return;
   }
-
-  const elementRect = this.$el.getBoundingClientRect();
+  const anchorElementRect = this.anchorElement.getBoundingClientRect();
   const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-  this.showIndicator = elementRect.top >= viewHeight;
+  this.showIndicator = anchorElementRect.top >= viewHeight;
 }
 
 export default {
+  props: {
+    anchorRef: {type: String, required: false, default: null}
+  },
   created() {
     this.forceEvaluation = checkScrollPosition.bind(this);
   },
   mounted() {
+    if (this.anchorRef === null) {
+      this.anchorElement = this.$el;
+    } else {
+      let parent;
+      if (this.$parent.$options._componentTag === "Layout") {
+        parent = this.$parent.$parent;
+      } else {
+        parent = this.$parent;
+      }
+      if (parent.$refs[this.anchorRef] === undefined) {
+        console.error(`Reference '${i}' was not found in parent component.`);
+        return;
+      }
+      this.anchorElement = parent.$refs[this.anchorRef];
+    }
     window.addEventListener('scroll', this.forceEvaluation, true);
   },
   beforeUnmount() {
@@ -33,11 +53,28 @@ export default {
     return {
       showIndicator: false
     }
+  },
+  methods: {
+    scrollToAnchor() {
+      window.scroll({
+        top: this.anchorElement.getBoundingClientRect().top,
+        behavior: 'smooth'
+      });
+    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+.fade-enter-active,
+.fade-leave-active
+  transition opacity .5s
+
+.fade-enter,
+.fade-leave-to,
+.fade-leave-active
+  opacity 0
+
 .scroll-for-more
   &__content
     border-radius remify(35)
