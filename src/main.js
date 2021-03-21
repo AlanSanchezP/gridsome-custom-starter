@@ -8,6 +8,7 @@ import { faBars, faPhoneAlt, faEnvelope, faCircleNotch,
   faUserShield, faComments, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookF, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import VModal from 'vue-js-modal/dist/ssr.index'; // copied from modal plugin code
 
 import '~/assets/styl/global.styl'
 import DefaultLayout from '~/layouts/Default.vue'
@@ -22,4 +23,10 @@ export default function (Vue, { router, head, isClient }) {
   Vue.component('Layout', DefaultLayout);
   Vue.component('font-awesome-icon', FontAwesomeIcon);
   Vue.directive('offClick', OffClickDirective);
+
+  // copied from modal plugin code
+  if (isClient) {
+    const { default: VModal } = require('vue-js-modal');
+    Vue.use(VModal, {dynamic: true, injectModalsContainer: true});
+  }
 }
