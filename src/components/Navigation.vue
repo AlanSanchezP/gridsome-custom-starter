@@ -170,9 +170,9 @@ body.noscroll
 /* $primaryThemeColor and $defaultTextColor are global variables. 
     This might throw an error if those variables do not exist.
  */
-$thinNavbarHeight = 56px
+$thinNavbarHeight = remify(56)
 $desktopScreenBreakpoint = 968px
-$desktopScreenNavbarHeight = 78px
+$desktopScreenNavbarHeight = remify(78)
 $navbarBg = white
 $navbarZindex = 12
 $hamburgerZindex = 16
@@ -189,14 +189,13 @@ $hamburgerLinkBg = lightness($hamburgerBg, 30%)
 $hamburgerActiveLinkAccent = white
 $hamburgerShadowColor = $defaultTextColor
 
-// TODO: Better management of text sizes
 // TODO: Handle different active-link styles, not only bottom-bordered
 
 .navigation-bar
   background $navbarBg
   display flex
   align-items center
-  padding 0 18px
+  padding 0 remify(18)
   justify-content space-between
   height $thinNavbarHeight
   left 0
@@ -214,25 +213,30 @@ $hamburgerShadowColor = $defaultTextColor
     background none
     border none
     color $inverseTextColor
-    font-size 1.5rem
-    margin-bottom 5px
-    margin-right 8px
+    margin-bottom remify(5)
+    margin-right remify(12)
+    margin-top remify(3)
     outline none
-    padding 5px 15px
+
+    .svg-inline--fa
+      height remify(20)
+      width @height
 
   &__menu-trigger
     background transparent
     border none
     display none
-    margin 18px 0
-    height 20px
-    width 20px
-    line-height 1.5em
-    padding 0
     outline none
+    padding 0
+    position absolute
+    right remify(18)
+    top 50%
+    transform translateY(-50%)
 
     .svg-inline--fa
       color $activeLinkAccent
+      height remify(20)
+      width @height
 
     span
       font-size 0
@@ -280,21 +284,21 @@ $hamburgerShadowColor = $defaultTextColor
       margin-right 0
       overflow-y auto
       position fixed
-      right -280px
+      right "min(-25vw, -280px)" % null
       top 0
       transition right 0.2s
       transition-timing-function cubic-bezier(0.86, 0, 0.07, 1)
-      width 280px
-      padding-top 15px
-      padding-bottom 50px
+      padding-top remify(15)
+      padding-bottom remify(50)
+      width "max(25vw, 280px)" % null
       z-index $hamburgerZindex
 
       &--visible
         right 0
-        box-shadow 0 0 10px $hamburgerShadowColor
+        box-shadow 0 0 remify(10) $hamburgerShadowColor
 
     & ^[0]__menu
-      margin-top 30px
+      margin-top remify(30)
       text-align left
 
     & ^[0]__menu-link
@@ -322,14 +326,13 @@ $hamburgerShadowColor = $defaultTextColor
 
 @media screen and (min-width: $bigScreenAt)
   .navigation-bar
-    height min(remify(50), 10vh)
+    height remify(50)
 
     &:not(^[0]--use-hamburger) &__menu-link
       font-size remify(16)
       height 100%
-      line-height min(remify(40), 9vh)
+      line-height remify(50) - $activeLinkBorderHeight
   
-    &__menu-container,
-    &__menu
+    &__menu-container
       height 100%
 </style>
