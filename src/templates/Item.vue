@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     coverSrc() {
-      return require('~/assets/' + this.$page.item.cover.replace('~/assets/', '')); 
+      return require(`@images/${this.$page.item.cover}`);
     }
   }
 }

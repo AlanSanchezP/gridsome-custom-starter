@@ -4,14 +4,22 @@
       <h1 class="page-title about-page__title">Debitis repellendus nam?</h1>
     </div>
     <div class="about-page__introduction">
-      <g-image src="~/assets/img/logo/logo.png" alt="Logo" class="about-page__logo" />
+      <g-image src="~/assets/img/logo/logo.png"
+        alt="Logo" class="about-page__logo"
+        width="312px"
+        height="356px" />
       <p>
         <strong>Consectetur</strong> ut inventore nihil libero suscipit fugit velit sapiente laudantium omnis placeat architecto, quia rem iste vel non voluptatum aliquid ea assumenda velit quo tenetur iusto. Quas consequuntur cumque corporis consequatur ipsum sapiente natus labore libero quos ad facere ea ut asperiores, sint, esse consectetur tempora iste exercitationem nulla.
       </p>
     </div>
     <div class="about-page__content">
       <div class="about-page__content-section">
-        <g-image src="~/assets/img/other/about_a.jpeg" alt="Accessibility description of photo" title="Photo" class="about-page__content-image"/>
+        <g-image src="~/assets/img/other/about_a.jpeg"
+          alt="Accessibility description of photo"
+          title="Photo"
+          class="about-page__content-image"
+          height="1000px"
+          width="1000px" />
         <p>
           Tempore, quibusdam non fugit animi magnam minus sapiente, saepe consequatur, totam alias inventore molestiae voluptatem voluptates maxime magni! Vel, iure voluptatem nesciunt commodi quod eos qui odio impedit. Excepturi, temporibus.Autem, officia corporis porro est laudantium atque laboriosam soluta cupiditate, illum amet ut optio nam cumque, assumenda illo voluptas possimus eos. Officiis facilis labore modi obcaecati, dolor in soluta expedita.
         </p>
@@ -20,7 +28,13 @@
         <p>
           Dolorum dolores nulla repellat ipsa rerum, explicabo cumque, voluptatum adipisci iusto error ad recusandae, voluptate ullam! Pariatur tempora quasi nesciunt possimus ab. Odio illo autem aperiam saepe provident animi. Qui sit quos perferendis totam natus saepe cupiditate sunt explicabo iste dolor praesentium aspernatur hic odio, repellendus deleniti, vel quam inventore eligendi omnis?
         </p>
-        <g-image src="~/assets/img/other/about_b.jpeg" alt="Accessibility description of photo" title="Photo" class="about-page__content-image" />
+        <g-image
+          src="~/assets/img/other/about_b.jpeg"
+          alt="Accessibility description of photo"
+          title="Photo"
+          class="about-page__content-image"
+          height="1000px"
+          width="1000px"/>
       </div>
     </div>
   </Layout>

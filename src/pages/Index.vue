@@ -4,9 +4,11 @@
   <Swiper class="home-carousel" ref="indexCarousel" :options="swiperOptions"
     @slideChangeTransitionEnd="onSlideChange"
     :class="{'home-carousel--fixed-height': useFixedHeight}">
-    <!-- FIX: G-image gets blurred on duplicate slides -->
     <SwiperSlide class="home-carousel-item">
-      <g-image src="~/assets/img/covers/cover_d.jpeg" class="home-carousel-item__cover cover" />
+      <g-image src="~/assets/img/covers/cover_d.jpeg"
+        class="home-carousel-item__cover cover"
+        width="3000px"
+        height="1500px" />
       <div class="home-carousel-item__div  vertical-center">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Laborum praesentium quidem nisi!</h2>
@@ -18,7 +20,10 @@
       </div>
     </SwiperSlide>
     <SwiperSlide class="home-carousel-item">
-      <g-image src="~/assets/img/covers/cover_e.jpeg" class="home-carousel-item__cover cover" />
+      <g-image src="~/assets/img/covers/cover_e.jpeg"
+        class="home-carousel-item__cover cover"
+        width="3000px"
+        height="1500px" />
       <div class="home-carousel-item__div vertical-center">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Aipisicing elit, tenetur laborum ex</h2>
@@ -30,7 +35,10 @@
       </div>
     </SwiperSlide>
     <SwiperSlide class="home-carousel-item">
-      <g-image src="~/assets/img/covers/cover_f.jpeg" class="home-carousel-item__cover cover" />
+      <g-image src="~/assets/img/covers/cover_f.jpeg"
+        class="home-carousel-item__cover cover"
+        width="3000px"
+        height="1500px" />
       <div class="home-carousel-item__div  vertical-center">
         <div class="home-carousel-item__content">
           <h2 class="home-carousel-item__title">Assumenda ea mollitia in eos vero eligendi</h2>

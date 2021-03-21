@@ -3,7 +3,9 @@
       <g-link to="/" class="site-footer__logo">
         <g-image src="~/assets/img/logo/logo-full_over-primary.png" 
           alt="Accesibility description of logo" 
-          title="Logo" />
+          title="Logo"
+          width="548px"
+          height="177px"/>
       </g-link>
       <div class="site-footer__links">
         <g-link v-for="(item, index) in links" :key="`link-${index}`"

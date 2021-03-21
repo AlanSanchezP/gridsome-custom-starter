@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     thumbnailSrc() {
-      return require('~/assets/' + this.item.thumbnail.replace('~/assets/', ''));
+      return require(`!!assets-loader?width=1000&quality=100&fit=cover!@images/${this.item.thumbnail}`);
     }
   }
 }

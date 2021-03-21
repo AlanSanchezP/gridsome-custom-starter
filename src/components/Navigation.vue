@@ -6,7 +6,9 @@
     <g-link to="/" class="navigation-bar__main-logo">
       <g-image src="~/assets/img/logo/logo-full_over-surface.png"
         alt="Logo accessibility description"
-        title="Logo"/>
+        title="Logo"
+        width="374px"
+        height="121px"/>
     </g-link>
     <button type="button" class="navigation-bar__menu-trigger" @click="showMenu" ref="menuTrigger">
       <font-awesome-icon icon="bars"/>
@@ -19,7 +21,9 @@
       <g-link v-if="useHamburger" class="navigation-bar__hamburger-logo" to="/">
         <g-image src="~/assets/img/logo/logo-full_over-primary.png"
           alt="Logo accessibility description"
-          title="Logo" />
+          title="Logo"
+          width="374px"
+          height="121px" />
       </g-link>
       <nav class="navigation-bar__menu" ref="menu">
         <g-link v-for="(route, index) in routes" :key="`route-${index}`"
