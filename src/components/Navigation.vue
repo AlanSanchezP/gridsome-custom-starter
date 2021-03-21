@@ -283,6 +283,7 @@ $hamburgerShadowColor = $defaultTextColor
       right -280px
       top 0
       transition right 0.2s
+      transition-timing-function cubic-bezier(0.86, 0, 0.07, 1)
       width 280px
       padding-top 15px
       padding-bottom 50px
