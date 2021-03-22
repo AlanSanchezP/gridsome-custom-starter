@@ -48,3 +48,15 @@ img.cover
 
   &--4by3
     padding-bottom 75%
+
+.screen-reader-only:not(:focus):not(:active)
+  border none
+  clip rect(0 0 0 0)
+  clip-path inset(100%)
+  font-size 0px
+  height 1px
+  overflow hidden
+  padding 0
+  position absolute
+  white-space nowrap
+  width 1px

@@ -3,7 +3,7 @@
     <transition name="fade">
     <div class="scroll-for-more__content" v-show="showIndicator"
       @click="scrollToAnchor">
-      <span>Scroll for more</span>
+      <span class="screen-reader-only">Scroll for more</span>
       <font-awesome-icon class="scroll-for-more__indicator" :icon="['fas', 'angle-double-right']" />
     </div>
     </transition>
@@ -90,9 +90,6 @@ export default {
     width remify(40)
     z-index 30
     simple-border('all', remify(2.5), white)
-
-    span
-      font-size 0
 
   &__indicator
     animation-duration 3s

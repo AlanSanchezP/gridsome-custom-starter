@@ -11,11 +11,12 @@
         height="121px"/>
     </g-link>
     <button type="button" class="navigation-bar__menu-trigger" @click="showMenu" ref="menuTrigger">
+      <span class="screen-reader-only">Display menu</span>
       <font-awesome-icon icon="bars"/>
-      <span>Display menu</span>
     </button>
     <div class="navigation-bar__menu-container" v-bind:class="{'navigation-bar__menu-container--visible': showSidebarMenu}"  v-offClick="offClickHandler">
       <button v-if="useHamburger" type="button" class="navigation-bar__close-menu" @click="closeMenu">
+        <span class="screen-reader-only">Close menu</span>
         <font-awesome-icon icon="times" />
       </button>
       <g-link v-if="useHamburger" class="navigation-bar__hamburger-logo" to="/">
@@ -241,9 +242,6 @@ $hamburgerShadowColor = $defaultTextColor
       color $activeLinkAccent
       height remify(20)
       width @height
-
-    span
-      font-size 0
 
   &__menu-container
     flex-grow 1
