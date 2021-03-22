@@ -6,7 +6,7 @@
     </div>
     <p class="content-collection-item-page__description" v-text="$page.item.description"></p>
     <div class="content-collection-item-page__video">
-      <div class="embed-responsive embed-responsive-16by9">
+      <div class="embed-responsive embed-responsive--16by9">
         <iframe :src="$page.item.videoEmbedUrl"></iframe>
       </div>
     </div>
