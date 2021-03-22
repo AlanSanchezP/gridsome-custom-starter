@@ -29,21 +29,6 @@ export default {
     this.forceEvaluation = checkScrollPosition.bind(this);
   },
   mounted() {
-    if (this.anchorRef === null) {
-      this.anchorElement = this.$el;
-    } else {
-      let parent;
-      if (this.$parent.$options._componentTag === "Layout") {
-        parent = this.$parent.$parent;
-      } else {
-        parent = this.$parent;
-      }
-      if (parent.$refs[this.anchorRef] === undefined) {
-        console.error(`Reference '${i}' was not found in parent component.`);
-        return;
-      }
-      this.anchorElement = parent.$refs[this.anchorRef];
-    }
     window.addEventListener('scroll', this.forceEvaluation, true);
   },
   beforeUnmount() {
@@ -60,6 +45,24 @@ export default {
         top: this.anchorElement.getBoundingClientRect().top,
         behavior: 'smooth'
       });
+    }
+  },
+  computed: {
+    anchorElement() {
+      if (this.anchorRef === null) {
+        return this.$el;
+      }
+      var parent;
+      if (this.$parent.$options._componentTag === "Layout") {
+        parent = this.$parent.$parent;
+      } else {
+        parent = this.$parent;
+      }
+      if (parent.$refs[this.anchorRef] === undefined) {
+        console.warn(`Reference '${this.anchorRef}' was not found in parent component. Using default element as anchor.`);
+        return this.$el;
+      }
+      return parent.$refs[this.anchorRef];
     }
   }
 }
