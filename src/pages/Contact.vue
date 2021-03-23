@@ -16,11 +16,11 @@
         <div class="form-item__message" v-if="!$v.message.maxLength">Message should be less than {{$v.message.$params.maxLength.max}} characters.</div>
       </div>
       <div class="form-submit">
-        <font-awesome-icon v-if="submitStatus == -1" icon="circle-notch" spin class="form-submit__spinner" />
-        <div v-if="submitStatus == 0" class="form-submit__message form-submit__message--error">{{submitError}}</div>
-        <button v-if="submitStatus != -1 && submitStatus != 1" 
+        <font-awesome-icon v-if="submitStatus == PENDING" icon="circle-notch" spin class="form-submit__spinner" />
+        <div v-if="submitStatus == INVALID" class="form-submit__message form-submit__message--error">{{submitError}}</div>
+        <button v-if="submitStatus != PENDING && submitStatus != SUCCESS"
           class="site-button site-button--default" type="submit" name="submit">Submit</button>
-        <div v-if="submitStatus == 1" class="form-submit__message form-submit__message--success">
+        <div v-if="submitStatus == SUCCESS" class="form-submit__message form-submit__message--success">
           <font-awesome-icon icon="check"/> Your message was sent successfully.
         </div>
       </div>
@@ -41,6 +41,11 @@ export default {
     title: 'Contact us'
   },
   mixins: [validationMixin],
+  created() {
+    this.PENDING = PENDING;
+    this.INVALID = INVALID;
+    this.SUCCESS = SUCCESS;
+  },
   data() {
     return {
       name: '',
@@ -61,13 +66,13 @@ export default {
     submit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
-        this.submitStatus = 0;
+        this.submitStatus = INVALID;
         this.submitError = 'Your data has some errors.'
       } else {
-        this.submitStatus = -1;
+        this.submitStatus = PENDING;
         this.submitError = '';
         setTimeout(() => {
-          this.submitStatus = 1;
+          this.submitStatus = SUCCESS;
         }, 1000);
       }
       
