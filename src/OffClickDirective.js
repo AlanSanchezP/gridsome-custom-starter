@@ -47,6 +47,53 @@ class OffClickHandler {
     }
 }
 
+var touchWasActivated = false;
+var mouseDownWasActivated = false;
+var handlers = [];
+
+function universalListenerManager(e) {
+  // Prevents all events from firing the same callbacks one after another.
+  //  All three listeners are needed to cover all screens and use cases
+  if (e.type == 'touchstart') {
+    touchWasActivated = true;
+  } else if (e.type == 'mousedown') {
+    mouseDownWasActivated = true;
+    if (touchWasActivated) {
+      touchWasActivated = false;
+      return;
+    }
+  } else if (e.type == 'click') {
+    if (mouseDownWasActivated) {
+      mouseDownWasActivated = false;
+      return;
+    } else {
+      console.warn('Click event got fired but mousedown didn\'t.');
+    }
+  }
+
+  for (let handler of handlers) {
+    handler(e);
+  }
+}
+
+function toggleEventListenersFor(element, attach) {
+  if (attach) {
+    if (!handlers.length) {
+      document.body.addEventListener('touchstart', universalListenerManager);
+      document.body.addEventListener('mousedown', universalListenerManager);
+      document.body.addEventListener('click', universalListenerManager);
+    }
+    handlers.push(element.offClick);
+  } else {
+    handlers = handlers.filter(item => item !== element.offClick);
+    if (!handlers.length) {
+      document.body.removeEventListener('touchstart', universalListenerManager);
+      document.body.removeEventListener('mousedown', universalListenerManager);
+      document.body.removeEventListener('click', universalListenerManager);
+    }
+  }
+}
+
 export default {
     bind(el, binding, vnode) {
       var offClickHandler = binding.value;
@@ -74,7 +121,7 @@ export default {
         
           // If not, call action
           if (!shouldIgnoreTarget) {
-              offClickHandler.action(event, el);
+            offClickHandler.action(event, el);
           }
         }
       }
@@ -83,12 +130,10 @@ export default {
           processEvent(event);
         }
       };
-      // TODO: Will these trigger at once?
-      document.body.addEventListener('click', el.offClick.bind(this));
-      document.body.addEventListener('touchstart', el.offClick.bind(this));
+
+      toggleEventListenersFor(el, true);
     },
     unbind(el) {
-      document.body.removeEventListener('click', el.offClick.bind(this));
-      document.body.removeEventListener('touchstart', el.offClick.bind(this));
+      toggleEventListenersFor(el, false);
     }
   }
