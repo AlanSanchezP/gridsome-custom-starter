@@ -116,6 +116,11 @@ export default {
     this.isSticky = true;
     // keys: string using the format w<WIDTH>h<HEIGHT> : w1024h720
     this.RESOLUTIONS_MAPPING = new Map();
+    this.offClickHandler= new OffClickHandlerBuilder()
+      .setAction(this.closeMenu)
+      .setEvaluator(() => this.useHamburger == this.showSidebarMenu)
+      .ignoreRefName('menuTrigger')
+      .build();
   },
   mounted() {
     window.addEventListener('resize', this.checkResponsive, true);
@@ -150,12 +155,7 @@ export default {
     return {
       showSidebarMenu: false,
       useHamburger: false,
-      performingResponsiveEvaluation: true, // default to true to prevent initial blink
-      offClickHandler: new OffClickHandlerBuilder()
-                        .setAction(this.closeMenu)
-                        .setEvaluator(() => this.useHamburger == this.showSidebarMenu)
-                        .ignoreRefName('menuTrigger')
-                        .build()
+      performingResponsiveEvaluation: true // default to true to prevent initial blink
     };
   },
   watch: {
