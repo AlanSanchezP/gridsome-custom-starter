@@ -90,13 +90,15 @@ function checkResponsive() {
 
     this.performingResponsiveEvaluation = false;
 
-    if (this.isSticky) return;
+    /*  Removed code: Uncomment if IE support is needed
+      if (this.isSticky) return;
 
-    // For this to work, it is needed that the next sibling doesn't add
-    //  any custom margin-top
-    const nextSibling = this.$refs.rootNavbar.nextSibling;
-    const navbarHeight = this.$refs.rootNavbar.offsetHeight;
-    nextSibling.style.marginTop = `${navbarHeight}px`;
+      // For this to work, it is needed that the next sibling doesn't add
+      //  any custom margin-top
+      const nextSibling = this.$refs.rootNavbar.nextSibling;
+      const navbarHeight = this.$refs.rootNavbar.offsetHeight;
+      nextSibling.style.marginTop = `${navbarHeight}px`;
+    */
   });
 }
 
@@ -113,7 +115,9 @@ export default {
   },
   created() {
     this.checkResponsive = checkResponsive.bind(this);
-    this.isSticky = true;
+    /*  Removed code: Uncomment if IE support is needed
+      this.isSticky = true;
+    */
     // keys: string using the format w<WIDTH>h<HEIGHT> : w1024h720
     this.RESOLUTIONS_MAPPING = new Map();
     this.offClickHandler= new OffClickHandlerBuilder()
@@ -124,8 +128,10 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', this.checkResponsive, true);
-    const navbarPositionType = getComputedStyle(this.$refs.rootNavbar).position;
-    this.isSticky = (navbarPositionType === 'sticky');
+    /*  Removed code: Uncomment if IE support is needed
+      const navbarPositionType = getComputedStyle(this.$refs.rootNavbar).position;
+      this.isSticky = (navbarPositionType === 'sticky');
+    */
     // If dispatching right away, something weird happens with menu height
     // FIX: In limit resolutions (~414px it seems), first validation fails and menu crashes
     this.$nextTick(() => window.dispatchEvent(new Event('resize')));
@@ -204,7 +210,9 @@ $hamburgerShadowColor = $defaultTextColor
   justify-content space-between
   height $thinNavbarHeight
   left 0
-  position fixed
+  /*  Removed code: Uncomment if IE support is needed
+    position fixed
+  */
   position sticky
   top 0
   width 100%
