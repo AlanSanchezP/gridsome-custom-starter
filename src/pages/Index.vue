@@ -3,7 +3,8 @@
   <div ref="aux" class="home-carousel__aux" aria-hidden="true"/>
   <Swiper class="home-carousel" ref="indexCarousel" :options="swiperOptions"
     @slideChangeTransitionEnd="onSlideChange"
-    :class="{'home-carousel--fixed-height': useFixedHeight}">
+    :class="{'home-carousel--fixed-height': useFixedHeight}"
+    resizeObserver="true">
     <SwiperSlide class="home-carousel-item">
       <g-image src="~/assets/img/covers/cover_d.jpeg"
         class="home-carousel-item__cover cover"
@@ -124,21 +125,26 @@ import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import CollectionItemAndModal from '../components/CollectionItemAndModal';
 import ScrollForMore from '../components/ScrollForMore';
 
-function checkCarouselHeight() {
+const DIV_CLASS_NAME = '.home-carousel-item__div';
+const CONTENT_CLASS_NAME = '.home-carousel-item__content';
+const COVER_CLASS_NAME = '.home-carousel-item__cover';
+
+function evaluateDynamicCarouselHeight() {
   if (!this) {
-    console.warn("Call this function using checkCarouselHeight.call(this)");
+    console.warn("Call this function using evaluateDynamicCarouselHeight.call(this)");
     return;
   }
-
-  this.initialCheckIsDone = true;
-
-  const activeIndex = this.swiper.activeIndex;
-  const activeSlideElem = this.swiper.slides[activeIndex];
-  const activeSlideHeight = activeSlideElem.querySelector('.home-carousel-item__content').offsetHeight;
-  const remSize = parseInt(getComputedStyle(document.documentElement).fontSize);
-  const referenceHeight = this.$refs.aux.offsetHeight - (30 / remSize); // includes padding
-
-  this.useFixedHeight = activeSlideHeight < referenceHeight;
+  var tallestChildContent = 0;
+  for (let slide of this.$refs.indexCarousel.$children) {
+    let slideContentHeight = slide.$el.querySelector(CONTENT_CLASS_NAME).offsetHeight;
+    tallestChildContent = Math.max(tallestChildContent, slideContentHeight);
+  }
+  const contentPadding = parseInt(
+    getComputedStyle(
+      this.$refs.indexCarousel.$children[0].$el.querySelector(DIV_CLASS_NAME)
+    ).paddingTop.replace(/px/, '')) * 2;
+  const referenceHeight = this.$refs.aux.offsetHeight - contentPadding; // includes padding
+  this.useFixedHeight = tallestChildContent < referenceHeight;
 }
 
 export default {
@@ -151,21 +157,8 @@ export default {
     CollectionItemAndModal,
     ScrollForMore
   },
-  created() {
-    this.initialCheckIsDone = false;
-    this.checkCarouselHeight = checkCarouselHeight.bind(this);
-  },
   mounted() {
-    this.checkCarouselHeight = checkCarouselHeight.bind(this);
-    window.addEventListener('resize', this.checkCarouselHeight, true);
-    this.$nextTick(() => {
-      if (!this.initialCheckIsDone) {
-        window.dispatchEvent(new Event('resize'));
-      }
-    });
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.checkCarouselHeight, true);
+    this.swiper.on('resize', evaluateDynamicCarouselHeight.bind(this));
   },
   data() {
     return {
@@ -185,13 +178,12 @@ export default {
       if (this.swiper.activeIndex == 0 ||
         this.swiper.activeIndex > effectiveSlidesCount) {
         const slide = this.swiper.slides[this.swiper.activeIndex];
-        const slideCover = slide.querySelector('.home-carousel-item__cover');
+        const slideCover = slide.querySelector(COVER_CLASS_NAME);
 
         if (slideCover.src.includes('data:')) {
           slideCover.srcset = slideCover.dataset.srcset;
         }
       }
-      checkCarouselHeight.call(this);
     }
   },
   computed: {
