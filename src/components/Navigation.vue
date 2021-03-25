@@ -46,17 +46,20 @@ const CALCULATING = -1;
 const NOT_USE_HAMBURGER = 0;
 const USE_HAMBURGER = 1;
 
+function getFormattedViewportSize() {
+  return `w${window.innerWidth}h${window.innerHeight}`;
+}
+
 function checkResponsive() {
   if (!this) {
     console.warn("Call this function using checkResponsive.call(this)");
     return;
   }
-  const WINDOW_SIZE = `w${window.screen.availWidth}h${window.screen.availHeight}`;
-  // This prevents the need to shedule more things than needed
-  //  and prevents double checks (onresize triggers more than once for some reason,
-  //  at least on developer tools)  
-  if (this.RESOLUTIONS_MAPPING.has(WINDOW_SIZE)) {
-    const storedValue = this.RESOLUTIONS_MAPPING.get(WINDOW_SIZE);
+  const VIEWPORT_SIZE = getFormattedViewportSize();
+  // This prevents unnecessary changing data status if calculations
+  //  have already been done.
+  if (this.RESOLUTIONS_MAPPING.has(VIEWPORT_SIZE)) {
+    const storedValue = this.RESOLUTIONS_MAPPING.get(VIEWPORT_SIZE);
     if (storedValue === CALCULATING) return;
     else if (storedValue === USE_HAMBURGER) {
       this.useHamburger = true;
@@ -69,37 +72,61 @@ function checkResponsive() {
     return;
   }
 
-  this.RESOLUTIONS_MAPPING.set(WINDOW_SIZE, CALCULATING);
+  // If this resolution has not been handled yet, this will trigger
+  //  menu ResizeObserver and hide it while calculations are performed.
+  this.RESOLUTIONS_MAPPING.set(VIEWPORT_SIZE, CALCULATING);
   this.useHamburger = false;
   this.performingResponsiveEvaluation = true;
 
-  // It's necessary to schedule this so that Vue can update the DOM.
-  //  Otherwise, this.$refs.menu.offsetTop value won't update and the check won't work
-  this.$nextTick(function scheduledCheck() {
-    const childHeight = this.$refs.menu.firstChild.offsetHeight;
-    // Check if elements got separated into 2 or more rows.
-    //  Using 1.2 factor to allow human-caused margin overflows (?)
-    if (this.$refs.menu.offsetHeight > childHeight * 1.2) {
-      this.RESOLUTIONS_MAPPING.set(WINDOW_SIZE, USE_HAMBURGER);
-      this.useHamburger = true;
+  /*  Removed code: Uncomment if IE support is needed
+    if (this.isSticky) return;
+
+    // For this to work, it is needed that the next sibling doesn't add
+    //  any custom margin-top
+    const nextSibling = this.$refs.rootNavbar.nextSibling;
+    const navbarHeight = this.$refs.rootNavbar.offsetHeight;
+    nextSibling.style.marginTop = `${navbarHeight}px`;
+  */
+}
+
+function checkMenuHeight() {
+  if (!this) {
+    console.warn('Call this function using checkMenuHeight.call(this)');
+    return;
+  }
+
+  const VIEWPORT_SIZE = getFormattedViewportSize();
+
+  if (!this.RESOLUTIONS_MAPPING.has(VIEWPORT_SIZE)) {
+    console.warn(`Resolution ${VIEWPORT_SIZE} has not been initialized in map.`);
+    return;
+  }
+  if (this.RESOLUTIONS_MAPPING.get(VIEWPORT_SIZE) !== CALCULATING) {
+    if (this.lastEvaluatedResolution === VIEWPORT_SIZE &&
+      this.RESOLUTIONS_MAPPING.get(VIEWPORT_SIZE) === NOT_USE_HAMBURGER) {
+      // For some weird reason, sometimes flex container crashes
+      //  AFTER initial evaluation is performed, causing it to mark the resolution
+      //  as hamburger-friendly, thus displaying a normal (buggy) menu.
+      console.warn('Resolution didn\'t change, but menu size did. Re-evaluating');
     } else {
-      this.RESOLUTIONS_MAPPING.set(WINDOW_SIZE, NOT_USE_HAMBURGER);
-      this.closeMenu();
-      this.useHamburger = false;
+      return;
     }
+  }
 
-    this.performingResponsiveEvaluation = false;
+  this.lastEvaluatedResolution = VIEWPORT_SIZE;
+  const childHeight = this.$refs.menu.firstChild.offsetHeight;
+  // Check if elements got separated into 2 or more rows.
+  //  Using 1.2 factor to allow human-caused margin overflows (?)
+  if (this.$refs.menu.offsetHeight > childHeight * 1.2) {
+    this.RESOLUTIONS_MAPPING.set(VIEWPORT_SIZE, USE_HAMBURGER);
+    this.useHamburger = true;
+  } else {
+    this.RESOLUTIONS_MAPPING.set(VIEWPORT_SIZE, NOT_USE_HAMBURGER);
+    this.closeMenu();
+    this.useHamburger = false;
+  }
 
-    /*  Removed code: Uncomment if IE support is needed
-      if (this.isSticky) return;
-
-      // For this to work, it is needed that the next sibling doesn't add
-      //  any custom margin-top
-      const nextSibling = this.$refs.rootNavbar.nextSibling;
-      const navbarHeight = this.$refs.rootNavbar.offsetHeight;
-      nextSibling.style.marginTop = `${navbarHeight}px`;
-    */
-  });
+  this.performingResponsiveEvaluation = false;
 }
 
 export default {
@@ -114,12 +141,12 @@ export default {
     routes: {type: Array, required: true}
   },
   created() {
-    this.checkResponsive = checkResponsive.bind(this);
     /*  Removed code: Uncomment if IE support is needed
       this.isSticky = true;
     */
     // keys: string using the format w<WIDTH>h<HEIGHT> : w1024h720
     this.RESOLUTIONS_MAPPING = new Map();
+    this.lastEvaluatedResolution = undefined;
     this.offClickHandler= new OffClickHandlerBuilder()
       .setAction(this.closeMenu)
       .setEvaluator(() => this.useHamburger == this.showSidebarMenu)
@@ -127,17 +154,18 @@ export default {
       .build();
   },
   mounted() {
-    window.addEventListener('resize', this.checkResponsive, true);
     /*  Removed code: Uncomment if IE support is needed
       const navbarPositionType = getComputedStyle(this.$refs.rootNavbar).position;
       this.isSticky = (navbarPositionType === 'sticky');
     */
-    // If dispatching right away, something weird happens with menu height
-    // FIX: In limit resolutions (~414px it seems), first validation fails and menu crashes
-    this.$nextTick(() => window.dispatchEvent(new Event('resize')));
+    this.resizeObserver = new ResizeObserver(checkResponsive.bind(this));
+    this.resizeObserver.observe(this.$el);
+    this.menuHeightObserver = new ResizeObserver(checkMenuHeight.bind(this));
+    this.menuHeightObserver.observe(this.$refs.menu);
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.checkResponsive, true);
+    this.menuHeightObserver.unobserve(this.$refs.menu);
+    this.resizeObserver.unobserve(this.$el);
   },
   methods: {
     showMenu() {
