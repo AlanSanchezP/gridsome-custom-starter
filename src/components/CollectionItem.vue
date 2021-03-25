@@ -1,7 +1,8 @@
 <template>
   <article class="content-collection-item">
-    <!-- TODO: Find better way to dynamically present link -->
-    <g-link :to="item.path" :is="useLink ? 'g-link' : 'div'">
+    <g-link :to="useLink ? item.path : null" 
+      :is="useLink ? 'g-link' : 'div'"
+      :role="useLink ? null : 'button'">
       <g-image :src="thumbnailSrc" 
         class="content-collection-item__thumbnail cover"
         alt="Thumbnail picture"
