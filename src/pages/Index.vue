@@ -139,7 +139,6 @@ function checkCarouselHeight() {
   const referenceHeight = this.$refs.aux.offsetHeight - (30 / remSize); // includes padding
 
   this.useFixedHeight = activeSlideHeight < referenceHeight;
-  this.$nextTick(() => this.$refs.scrollForMore.forceEvaluation());
 }
 
 export default {

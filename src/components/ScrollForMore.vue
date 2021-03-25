@@ -11,28 +11,32 @@
 </template>
 
 <script>
-function checkScrollPosition() {
+function toggleIndicatorVisibility(entries, observer) {
   if (!this) {
-    console.warn("Call this function using checkScrollPosition.call(this)");
+    console.warn('Call this function using toggleIndicatorVisibility.call(this)');
     return;
   }
-  const anchorElementRect = this.anchorElement.getBoundingClientRect();
-  const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-  this.showIndicator = anchorElementRect.top >= viewHeight;
+  entries.forEach(entry => {
+    this.showIndicator = (!entry.isIntersecting && entry.boundingClientRect.top > 0);
+  });
 }
 
 export default {
   props: {
+    // !! Important. Must be an element that is not expected to be replaced
+    //  at any point by vue, since IntersectionObserver will be attached to it
     anchorRef: {type: String, required: false, default: null}
   },
-  created() {
-    this.forceEvaluation = checkScrollPosition.bind(this);
-  },
   mounted() {
-    window.addEventListener('scroll', this.forceEvaluation, true);
+    let options = {
+      rootMargin: '0px',
+      threshold: 0.25
+    };
+    this.observer = new IntersectionObserver(toggleIndicatorVisibility.bind(this), options);
+    this.observer.observe(this.anchorElement);
   },
   beforeUnmount() {
-    window.removeEventListener('scroll', this.forceEvaluation, true);
+    this.observer.unobserve(this.anchorElement);
   },
   data() {
     return {
