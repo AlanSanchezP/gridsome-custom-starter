@@ -67,8 +67,13 @@ label.error
   width 100%
 
   &__input
+    box-shadow none
     line-height 1
+    outline none
     width 100%
+
+    &:focus
+      border-color $primaryThemeColor !important
 
     ../--error &
       border-color $errorColor !important
@@ -107,7 +112,8 @@ label.error
   line-height 1
   outline none
   padding 1.2em 2.8em
-  transition background-color 0.2s, border-color 0.2s, color 0.2s
+  transition background-color 0.2s, border-color 0.2s, \
+              color 0.2s, box-shadow 0.2s
   simple-border('all', remify(2), transparent)
 
   &--default
@@ -119,12 +125,16 @@ label.error
       background-color darken($primaryThemeColor, 20%)
       border-color darken($primaryThemeColor, 20%)
 
+    &:focus
+      background-color $primaryThemeColor
+      border-color $primaryThemeColor
+
   &--transparent
     background-color transparent
     border-color $primaryThemeColor
     color $primaryThemeColor
 
-    &:hover, &:active
+    &:hover, &:active, &:focus
       background-color $primaryThemeColor
       color $inverseTextColor
 
@@ -136,6 +146,11 @@ label.error
     &:hover, &:active
       background-color $inverseTextColor
       color $primaryThemeColor
+    &:focus
+      box-shadow 0.3em 0.3em 0 0.1em $lightShadowColor !important
+
+  &:not(&--transparent-inverse):focus
+    box-shadow 0.3em 0.3em 0 0.1em darken($primaryThemeColor, 60%)
 
 textarea
   resize none

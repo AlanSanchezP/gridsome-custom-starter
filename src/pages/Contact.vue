@@ -105,10 +105,6 @@ export default {
     padding 1em 2em
     simple-border('all', remify(0.5), $lightShadowColor)
 
-    &, &:hover, &:active &:focus
-      box-shadow none
-      outline none
-
     &::placeholder
       color rgba($inputTextColor, 0.86)
       font-family inherit
