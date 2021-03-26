@@ -101,8 +101,15 @@ export default {
     line-height 1.96
     transition opacity 0.2s
 
-    &:hover
-      opacity 0.8
+    &::before
+      background-color white
+      content '|'
+      margin-right 0.4em
+      opacity 0
+
+    &:hover, &:active, &:focus
+      &::before
+        opacity 1
 
   &__links
     grid-area links
@@ -122,7 +129,7 @@ export default {
     transition background-color 0.2s
     simple-border('all', remify(1), white)
 
-    &:hover
+    &:hover, &.focus, &:active
       background-color white
       color $primaryThemeColor
 
