@@ -27,13 +27,13 @@
           height="121px" />
       </g-link>
       <nav class="navigation-bar__menu" ref="menu">
-        <g-link v-for="(route, index) in routes" :key="`route-${index}`"
-          :to="route.path"
+        <CustomLink v-for="(route, index) in routes" :key="`route-${index}`"
+          :destination="route.destination"
           :exact="route.matchExact != false"
           class="navigation-bar__menu-link"
           active-class="navigation-bar__menu-link--active">
           {{route.text}}
-        </g-link>
+        </CustomLink>
       </nav>
     </div>
   </header>
@@ -41,6 +41,7 @@
 
 <script>
 import {OffClickHandlerBuilder} from '~/OffClickDirective';
+import CustomLink from './CustomLink';
 
 const CALCULATING = -1;
 const NOT_USE_HAMBURGER = 0;
@@ -132,11 +133,10 @@ function checkMenuHeight() {
 export default {
   props: {
     /* Format: {
-        path: String,
+        destination: String,
         matchExact: Boolean | default: true,
         text: String
       }
-      DOESN'T SUPPORT EXTERNAL LINKS FOR NOW
     */
     routes: {type: Array, required: true}
   },
@@ -196,6 +196,9 @@ export default {
     $route (to, from) {
       this.closeMenu();
     }
+  },
+  components: {
+    CustomLink
   }
 }
 </script>

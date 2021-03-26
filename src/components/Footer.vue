@@ -8,49 +8,50 @@
           height="177px"/>
       </g-link>
       <div class="site-footer__links">
-        <g-link v-for="(item, index) in links" :key="`link-${index}`"
-            :to="item.path"
+        <CustomLink v-for="(item, index) in links" :key="`link-${index}`"
+            :destination="item.destination"
             class="site-footer__link-item"
             v-text="item.text" />
       </div>
       <div class="site-footer__social">
-        <a v-for="(item, index) in social"
+        <CustomLink v-for="(item, index) in social"
           class="site-footer__social-item"
-          target="_blank"
           :key="`social-${index}`"
-          :href="item.linkTo"
+          target="_blank"
+          :destination="item.destination"
           :title="'Contact us at ' + item.type" >
           <font-awesome-icon :icon="['fab', 'facebook-f']" v-if="item.type == 'facebook'" />
           <font-awesome-icon :icon="['fab', 'twitter']" v-else-if="item.type == 'twitter'" />
           <font-awesome-icon :icon="['fab', 'instagram']" v-else-if="item.type == 'instagram'" />
-        </a>
+        </CustomLink>
       </div>
       <div class="site-footer__contact">
-        <a v-for="(item, index) in contact"
+        <CustomLink v-for="(item, index) in contact"
           class="site-footer__link-item"
           :key="`contact-${index}`"
-          :href="(item.type == 'phone' ? 'tel:' : 'mailto:') + item.value" >
+          :destination="(item.type == 'phone' ? 'tel:' : 'mailto:') + item.value" >
           <font-awesome-icon :icon="(item.type == 'phone' ? 'phone-alt' : 'envelope')" />
           {{ item.text != undefined ? item.text : item.value }}
-        </a>
+        </CustomLink>
       </div>
     <address class="site-footer__address" v-text="address" />
   </footer>
 </template>
 
 <script>
+import CustomLink from './CustomLink';
+
 export default {
     // TODO: Make it dynamic via params
     props: {
       /* Format: {
-          path: String,
+          destination: String,
           text: String
         }
-        DOESN'T SUPPORT EXTERNAL LINKS FOR NOW
       */
       links: {type: Array, default: () => []},
       /* Format: {
-          linkTo: String,
+          destination: String,
           type: String [ facebook | twitter | instagram] TODO: Support more
         }
       */
@@ -63,6 +64,9 @@ export default {
       */
       contact: {type: Array, default: () => []},
       address: {type: String, default: 'Company Address'}
+    },
+    components: {
+      CustomLink
     }
 }
 </script>

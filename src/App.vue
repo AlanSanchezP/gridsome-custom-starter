@@ -21,57 +21,57 @@ export default {
   created() {
     this.navRoutes = [
       {
-        path: '/',
+        destination: '/',
         text: 'Home'
       }, {
-        path: '/about',
+        destination: '/about',
         text: 'About'
       }, {
-        path: '/contact',
+        destination: '/contact',
         text: 'Contact'
       }, {
-        path: '/items',
+        destination: '/items',
         matchExact: false,
         text: 'Items'
       }, {
-        path: '/more',
+        destination: '/more',
         text: 'More',
       }
     ];
     this.footerData = {
       links: [
         {
-          path: '/',
+          destination: '/',
           text: 'Footer link'
         },
         {
-          path: '/',
+          destination: '/',
           text: 'Footer link'
         },
         {
-          path: '/',
+          destination: '/',
           text: 'Footer link'
         },
         {
-          path: '/',
+          destination: '/',
           text: 'Footer link'
         },
         {
-          path: '/',
+          destination: '/',
           text: 'Footer link'
         }
       ],
       social: [
         {
-          linkTo: '#',
+          destination: '#',
           type: 'facebook'
         },
         {
-          linkTo: '#',
+          destination: '#',
           type: 'twitter'
         },
         {
-          linkTo: '#',
+          destination: '#',
           type: 'instagram'
         }
       ],
