@@ -86,6 +86,7 @@ export default {
   &__content
     border-radius remify(35)
     bottom remify(15)
+    box-shadow 0 0 remify(2) black
     color white
     height remify(70)
     left 50%
@@ -101,6 +102,7 @@ export default {
     animation-name scrollDown
     animation-timing-function ease
     display block
+    filter "drop-shadow(0 0 %s black)" % remify(2)
     height remify(28)
     position relative
     transform rotate(90deg)
