@@ -1,7 +1,7 @@
 <template>
   <div class="scroll-for-more">
     <transition name="fade">
-    <div class="scroll-for-more__content" v-show="showIndicator"
+    <div class="scroll-for-more__content" title="Scroll for more" v-show="showIndicator"
       @click="scrollToAnchor">
       <span class="screen-reader-only">Scroll for more</span>
       <font-awesome-icon class="scroll-for-more__indicator" :icon="['fas', 'angle-double-right']" />
@@ -88,13 +88,22 @@ export default {
     bottom remify(15)
     box-shadow 0 0 remify(2) black
     color white
+    cursor pointer
     height remify(70)
     left 50%
     position fixed
     transform translateX(-50%)
+    transition background-color 0.2s
     width remify(40)
     z-index 30
     simple-border('all', remify(2.5), white)
+
+    &:hover, &:active, &:focus
+      background-color white
+      color black
+
+      & ^[0]__indicator
+        filter none
 
   &__indicator
     animation-duration 3s
