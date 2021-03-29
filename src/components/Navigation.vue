@@ -2,7 +2,10 @@
   <header ref="rootNavbar"
     class="navigation-bar"
     @keyup.esc="closeMenu"
-    v-bind:class="{'navigation-bar--use-hamburger': useHamburger, 'performing-responsive-evaluation': performingResponsiveEvaluation}">
+    v-bind:class="{'navigation-bar--use-hamburger': useHamburger,
+      'performing-responsive-evaluation': performingResponsiveEvaluation,
+      'still-on-top': stillOnTop,
+      'use-transparent': useTransparent}">
     <g-link to="/" class="navigation-bar__main-logo">
       <g-image src="~/assets/img/logo/logo-full_over-surface.png"
         alt="Logo accessibility description"
@@ -56,6 +59,8 @@ function checkResponsive() {
     console.warn("Call this function using checkResponsive.call(this)");
     return;
   }
+
+  this.$emit('navbar-height', `${this.$el.offsetHeight}px`);
   const VIEWPORT_SIZE = getFormattedViewportSize();
   // This prevents unnecessary changing data status if calculations
   //  have already been done.
@@ -130,6 +135,30 @@ function checkMenuHeight() {
   this.performingResponsiveEvaluation = false;
 }
 
+function evaluateTransparencyUsage(route) {
+  if (!this) {
+    console.warn('Call this function using evaluateTransparencyUsage.call(this)');
+    return;
+  }
+
+  var useTransparentNavbar = false;
+  if (route.matched[0].components.default.routerMeta) {
+    useTransparentNavbar = route.matched[0].components.default.routerMeta.transparentNavbar;
+  }
+  this.useTransparent = useTransparentNavbar;
+
+  const routeElem = route.matched[0].instances.default.$el;
+  if (useTransparentNavbar) {
+    if (!routeElem.classList.contains('force-relative')){
+      routeElem.classList.add('force-relative');
+    }
+  } else {
+    if (routeElem.classList.contains('force-relative')){
+      routeElem.classList.remove('force-relative');
+    }
+  }
+}
+
 export default {
   props: {
     /* Format: {
@@ -152,6 +181,7 @@ export default {
       .setEvaluator(() => this.useHamburger == this.showSidebarMenu)
       .ignoreRefName('menuTrigger')
       .build();
+    this.auxIntersectionNotifier = (e) => this.stillOnTop = e[0].isIntersecting;
   },
   mounted() {
     /*  Removed code: Uncomment if IE support is needed
@@ -162,6 +192,7 @@ export default {
     this.resizeObserver.observe(this.$el);
     this.menuHeightObserver = new ResizeObserver(checkMenuHeight.bind(this));
     this.menuHeightObserver.observe(this.$refs.menu);
+    evaluateTransparencyUsage.call(this, this.$route);
   },
   beforeDestroy() {
     this.menuHeightObserver.unobserve(this.$refs.menu);
@@ -187,6 +218,8 @@ export default {
   },
   data() {
     return {
+      stillOnTop: true,
+      useTransparent: false,
       showSidebarMenu: false,
       useHamburger: false,
       performingResponsiveEvaluation: true // default to true to prevent initial blink
@@ -195,6 +228,7 @@ export default {
   watch: {
     $route (to, from) {
       this.closeMenu();
+      evaluateTransparencyUsage.call(this, to);
     }
   },
   components: {
@@ -206,6 +240,9 @@ export default {
 <style lang="stylus">
 body.noscroll
   overflow hidden !important
+
+.force-relative
+  position relative !important
 </style>
 
 <style lang="stylus" scoped>
@@ -234,7 +271,7 @@ $hamburgerShadowColor = $defaultTextColor
 // TODO: Handle different active-link styles, not only bottom-bordered
 
 .navigation-bar
-  background $navbarBg
+  background-color $navbarBg
   display flex
   align-items center
   padding 0 remify(18)
@@ -246,12 +283,20 @@ $hamburgerShadowColor = $defaultTextColor
   */
   position sticky
   top 0
+  transition background-color 0.2s, border-color 0.2s
   width 100%
   z-index $navbarZindex
   simple-border('bottom', remify(1), $lightShadowColor)
 
+  &.still-on-top.use-transparent
+    background-color transparent
+    border-color transparent
+
   &.performing-responsive-evaluation &__menu-container
     opacity 0
+
+  &__sentinel
+    position absolute
 
   &__close-menu
     background none
@@ -305,6 +350,12 @@ $hamburgerShadowColor = $defaultTextColor
     line-height $thinNavbarHeight - $activeLinkBorderHeight
 
   &:not(^[0]--use-hamburger)
+    &.still-on-top.use-transparent ^[0]__menu-link
+      color white
+
+      &:hover, &--active
+        border-color white
+
     & ^[0]__menu-link
       color $linkColor
       display inline-block
@@ -316,6 +367,9 @@ $hamburgerShadowColor = $defaultTextColor
         simple-border('bottom', $activeLinkBorderHeight, $activeLinkAccent)
 
   &&--use-hamburger
+    &.still-on-top.use-transparent ^[0]__menu-trigger .svg-inline--fa
+      color white
+
     & ^[0]__menu-trigger
       display block
 

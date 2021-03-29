@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <Navigation :routes="navRoutes" />
-    <router-view id="main-content"/>
+    <Navigation :routes="navRoutes"
+      @navbar-height="updateNavbarHeight" ref="navbar"/>
+    <div class="navbar-sentinel" ref="sentinel"/>
+    <router-view id="main-content" ref="router"
+      :style="{top: navbarHeightCompensation}"/>
     <Footer :links="footerData.links"
       :social="footerData.social"
       :contact="footerData.contact"
@@ -93,6 +96,27 @@ export default {
       ],
       address: 'Company address'
     };
+  },
+  mounted() {
+    let options = {
+      rootMargin: '0px',
+      threshold: 0
+    };
+    this.observer = new IntersectionObserver(e => this.$refs.navbar.auxIntersectionNotifier(e), options);
+    this.observer.observe(this.$refs.sentinel);
+  },
+  beforeDestroy() {
+    this.observer.unobserve(this.$refs.sentinel);
+  },
+  data() {
+    return {
+      navbarHeightCompensation: 0
+    }
+  },
+  methods: {
+    updateNavbarHeight(height) {
+      this.navbarHeightCompensation = `-${height}`;
+    }
   }
 }
 </script>
@@ -106,4 +130,8 @@ export default {
 #main-content
   overflow-x hidden
   width 100%
+
+.navbar-sentinel
+  position absolute
+  z-index -100
 </style>
