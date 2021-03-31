@@ -2,7 +2,9 @@
   <header ref="rootNavbar"
     class="navigation-bar"
     @keyup.esc="closeMenu"
-    v-bind:class="{'navigation-bar--use-hamburger': useHamburger,
+    v-bind:class="{'navigation-bar--use-mobile': useMobile,
+      'navigation-bar--mobile-at-left': menuSide == 'left',
+      'navigation-bar--mobile-at-right': menuSide == 'right',
       'performing-responsive-evaluation': performingResponsiveEvaluation,
       'still-on-top': stillOnTop,
       'use-transparent': useTransparent}">
@@ -17,12 +19,16 @@
       <span class="screen-reader-only">Display menu</span>
       <font-awesome-icon icon="bars"/>
     </button>
-    <div class="navigation-bar__menu-container" v-bind:class="{'navigation-bar__menu-container--visible': showSidebarMenu}"  v-offClick="offClickHandler">
-      <button v-if="useHamburger" type="button" class="navigation-bar__close-menu" @click="closeMenu">
+    <div class="navigation-bar__menu-container"
+      v-bind:class="{'navigation-bar__menu-container--visible': showSidebarMenu,
+      'navigation-bar__menu-container--sidebar-style': menuType == 'sidebar',
+      'navigation-bar__menu-container--fullscreen-style': menuType == 'fullscreen',}"
+      v-offClick="offClickHandler">
+      <button v-if="useMobile" type="button" class="navigation-bar__close-menu" @click="closeMenu">
         <span class="screen-reader-only">Close menu</span>
         <font-awesome-icon icon="times" />
       </button>
-      <g-link v-if="useHamburger" class="navigation-bar__hamburger-logo" to="/">
+      <g-link v-if="useMobile" class="navigation-bar__hamburger-logo" to="/">
         <g-image src="~/assets/img/logo/logo-full_over-primary.png"
           alt="Logo accessibility description"
           title="Logo"
@@ -68,11 +74,11 @@ function checkResponsive() {
     const storedValue = this.RESOLUTIONS_MAPPING.get(VIEWPORT_SIZE);
     if (storedValue === CALCULATING) return;
     else if (storedValue === USE_HAMBURGER) {
-      this.useHamburger = true;
+      this.useMobile = true;
       this.performingResponsiveEvaluation = false;
     } else {
       this.closeMenu();
-      this.useHamburger = false;
+      this.useMobile = false;
       this.performingResponsiveEvaluation = false;
     }
     return;
@@ -81,7 +87,7 @@ function checkResponsive() {
   // If this resolution has not been handled yet, this will trigger
   //  menu ResizeObserver and hide it while calculations are performed.
   this.RESOLUTIONS_MAPPING.set(VIEWPORT_SIZE, CALCULATING);
-  this.useHamburger = false;
+  this.useMobile = false;
   this.performingResponsiveEvaluation = true;
 
   /*  Removed code: Uncomment if IE support is needed
@@ -125,11 +131,11 @@ function checkMenuHeight() {
   //  Using 1.2 factor to allow human-caused margin overflows (?)
   if (this.$refs.menu.offsetHeight > childHeight * 1.2) {
     this.RESOLUTIONS_MAPPING.set(VIEWPORT_SIZE, USE_HAMBURGER);
-    this.useHamburger = true;
+    this.useMobile = true;
   } else {
     this.RESOLUTIONS_MAPPING.set(VIEWPORT_SIZE, NOT_USE_HAMBURGER);
     this.closeMenu();
-    this.useHamburger = false;
+    this.useMobile = false;
   }
 
   this.performingResponsiveEvaluation = false;
@@ -167,7 +173,9 @@ export default {
         text: String
       }
     */
-    routes: {type: Array, required: true}
+    routes: {type: Array, required: true},
+    menuSide: {type: String, default: 'right', validate: v => ['left', 'right'].includes(v)},
+    menuType: {type: String, default: 'sidebar', validate: v => ['sidebar', 'fullscreen'].includes(v)}
   },
   created() {
     /*  Removed code: Uncomment if IE support is needed
@@ -178,7 +186,7 @@ export default {
     this.lastEvaluatedResolution = undefined;
     this.offClickHandler= new OffClickHandlerBuilder()
       .setAction(this.closeMenu)
-      .setEvaluator(() => this.useHamburger == this.showSidebarMenu)
+      .setEvaluator(() => this.useMobile == this.showSidebarMenu)
       .ignoreRefName('menuTrigger')
       .build();
     this.auxIntersectionNotifier = (e) => this.stillOnTop = e[0].isIntersecting;
@@ -200,7 +208,7 @@ export default {
   },
   methods: {
     showMenu() {
-      if (!this.useHamburger) return;
+      if (!this.useMobile) return;
       if (this.showSidebarMenu) return;
       if (!document.body.classList.contains('noscroll')){
         document.body.classList.add('noscroll');
@@ -208,7 +216,7 @@ export default {
       this.showSidebarMenu = true;
     },
     closeMenu() {
-      if (!this.useHamburger) return;
+      if (!this.useMobile) return;
       if (!this.showSidebarMenu) return;
       this.showSidebarMenu = false;
       if (document.body.classList.contains('noscroll')){
@@ -221,7 +229,7 @@ export default {
       stillOnTop: true,
       useTransparent: false,
       showSidebarMenu: false,
-      useHamburger: false,
+      useMobile: false,
       performingResponsiveEvaluation: true // default to true to prevent initial blink
     };
   },
@@ -317,15 +325,14 @@ $hamburgerShadowColor = $defaultTextColor
     display none
     outline none
     padding 0
-    position absolute
-    right remify(18)
-    top 50%
-    transform translateY(-50%)
 
     .svg-inline--fa
       color $activeLinkAccent
       height remify(20)
       width @height
+
+    ../--mobile-at-left &
+      order -2
 
   &__menu-container
     flex-grow 1
@@ -349,7 +356,7 @@ $hamburgerShadowColor = $defaultTextColor
   &__menu-link
     line-height $thinNavbarHeight - $activeLinkBorderHeight
 
-  &:not(^[0]--use-hamburger)
+  &:not(^[0]--use-mobile)
     &.still-on-top.use-transparent ^[0]__menu-link
       color white
 
@@ -366,7 +373,7 @@ $hamburgerShadowColor = $defaultTextColor
       &:hover, &--active
         simple-border('bottom', $activeLinkBorderHeight, $activeLinkAccent)
 
-  &&--use-hamburger
+  &&--use-mobile
     &.still-on-top.use-transparent ^[0]__menu-trigger .svg-inline--fa
       color white
 
@@ -379,17 +386,38 @@ $hamburgerShadowColor = $defaultTextColor
       margin-right 0
       overflow-y auto
       position fixed
-      right "min(-25vw, -280px)" % null
       top 0
-      transition right 0.2s
       transition-timing-function cubic-bezier(0.86, 0, 0.07, 1)
       padding-top remify(15)
       padding-bottom remify(50)
-      width "max(25vw, 280px)" % null
       z-index $hamburgerZindex
 
+      &--sidebar-style
+        width "max(25vw, 280px)" % null
+        transition right 0.2s, left 0.2s
+
+        ^[0]--mobile-at-left&
+          left "min(-25vw, -280px)" % null
+
+          &^[0]__menu-container--visible
+            left 0
+
+        ^[0]--mobile-at-right&
+          right "min(-25vw, -280px)" % null
+
+          &^[0]__menu-container--visible
+            right 0
+
+      &--fullscreen-style
+        width 100vw
+        left 0
+        transition top 0.2s
+        top -100vh
+
+        &^[0]__menu-container--visible
+          top 0
+
       &--visible
-        right 0
         box-shadow 0 0 remify(10) $hamburgerShadowColor
 
     & ^[0]__menu
@@ -410,11 +438,10 @@ $hamburgerShadowColor = $defaultTextColor
 
 @media screen and (min-width: $desktopScreenBreakpoint)
   .navigation-bar
-    justify-content initial
     height $desktopScreenNavbarHeight
     padding 0 remify(34)
 
-    &:not(^[0]--use-hamburger) &__menu-link
+    &:not(^[0]--use-mobile) &__menu-link
       font-size remify(16)
       line-height $desktopScreenNavbarHeight - $activeLinkBorderHeight
       padding 0 0.7em
@@ -423,7 +450,7 @@ $hamburgerShadowColor = $defaultTextColor
   .navigation-bar
     height remify(50)
 
-    &:not(^[0]--use-hamburger) &__menu-link
+    &:not(^[0]--use-mobile) &__menu-link
       font-size remify(16)
       height 100%
       line-height remify(50) - $activeLinkBorderHeight
