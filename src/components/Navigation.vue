@@ -45,6 +45,9 @@
         </CustomLink>
       </nav>
     </div>
+    <div class="navigation-bar__fixed-elements">
+      <slot></slot>
+    </div>
   </header>
 </template>
 
@@ -261,8 +264,8 @@ $thinNavbarHeight = remify(56)
 $desktopScreenBreakpoint = 968px
 $desktopScreenNavbarHeight = remify(78)
 $navbarBg = white
-$navbarZindex = 12
-$hamburgerZindex = 16
+$navbarZindex = 40
+$hamburgerZindex = 44
 
 // Not-hamburger
 $activeLinkBorderHeight = remify(4)
@@ -306,6 +309,15 @@ $hamburgerShadowColor = $defaultTextColor
   &__sentinel
     position absolute
 
+  &__fixed-elements
+    display flex
+    flex-wrap nowrap
+    padding-bottom $activeLinkBorderHeight
+
+    & > *
+      color inherit
+      margin 0 remify(8)
+
   &__close-menu
     background none
     border none
@@ -334,6 +346,9 @@ $hamburgerShadowColor = $defaultTextColor
     ../--mobile-at-left &
       order -2
 
+    ../--mobile-at-right &
+      order 1
+
   &__menu-container
     flex-grow 1
     text-align right
@@ -357,6 +372,8 @@ $hamburgerShadowColor = $defaultTextColor
     line-height $thinNavbarHeight - $activeLinkBorderHeight
 
   &:not(^[0]--use-mobile)
+    font-size 1rem
+
     &.still-on-top.use-transparent ^[0]__menu-link
       color white
 
@@ -366,7 +383,6 @@ $hamburgerShadowColor = $defaultTextColor
     & ^[0]__menu-link
       color $linkColor
       display inline-block
-      font-size 1rem
       simple-border('bottom', $activeLinkBorderHeight, transparent)
       padding 0 0.7em
 
@@ -374,8 +390,29 @@ $hamburgerShadowColor = $defaultTextColor
         simple-border('bottom', $activeLinkBorderHeight, $activeLinkAccent)
 
   &&--use-mobile
+    font-size remify(16)
+
     &.still-on-top.use-transparent ^[0]__menu-trigger .svg-inline--fa
       color white
+
+    & ^[0]__fixed-elements
+      flex-grow 1
+      padding-bottom 0
+
+      ^[0]--mobile-at-left&
+        justify-content flex-start
+        margin-left remify(16)
+        order -2
+
+        & > :first-child
+          margin-left 0
+
+      ^[0]--mobile-at-right&
+        justify-content flex-end
+        margin-right remify(16)
+
+        & > :last-child
+          margin-left 0
 
     & ^[0]__menu-trigger
       display block
@@ -427,7 +464,6 @@ $hamburgerShadowColor = $defaultTextColor
     & ^[0]__menu-link
       color $hamburgerLinkColor
       display block
-      font-size remify(16)
       line-height 1
       padding 1em 2em
       simple-border('left', $activeLinkBorderWidth, transparent)
@@ -441,19 +477,23 @@ $hamburgerShadowColor = $defaultTextColor
     height $desktopScreenNavbarHeight
     padding 0 remify(34)
 
-    &:not(^[0]--use-mobile) &__menu-link
+    &:not(^[0]--use-mobile)
       font-size remify(16)
-      line-height $desktopScreenNavbarHeight - $activeLinkBorderHeight
-      padding 0 0.7em
+
+      & ^[0]__menu-link
+        line-height $desktopScreenNavbarHeight - $activeLinkBorderHeight
+        padding 0 0.7em
 
 @media screen and (min-width: $bigScreenAt)
   .navigation-bar
     height remify(50)
 
-    &:not(^[0]--use-mobile) &__menu-link
+    &:not(^[0]--use-mobile)
       font-size remify(16)
-      height 100%
-      line-height remify(50) - $activeLinkBorderHeight
+
+      & ^[0]__menu-link
+        height 100%
+        line-height remify(50) - $activeLinkBorderHeight
   
     &__menu-container
       height 100%

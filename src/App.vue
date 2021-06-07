@@ -1,7 +1,19 @@
 <template>
   <div id="app">
-    <Navigation :routes="navRoutes"
-      @navbar-height="updateNavbarHeight" ref="navbar"/>
+    <Navigation :routes="navRoutes" menuSide="left"
+      @navbar-height="updateNavbarHeight" ref="navbar">
+      <!-- Fixed elements (not inside collapsable menu) -->
+      <!-- IMPORTANT: These elements might break on small screens
+            and are not styled in any way -->
+      <a href="#">
+        <font-awesome-icon :icon="['fab', 'whatsapp']" />
+        Call us
+      </a>
+      <a href="#">
+        <font-awesome-icon icon="hand-holding-heart" />
+        Support us
+      </a>
+    </Navigation>
     <div class="navbar-sentinel" ref="sentinel"/>
     <router-view id="main-content" ref="router"
       :style="{top: navbarHeightCompensation}"/>
@@ -15,11 +27,13 @@
 <script>
 import Navigation from '~/components/Navigation.vue';
 import Footer from '~/components/Footer.vue';
+import CustomLink from '~/components/CustomLink.vue';
 
 export default {
   components: {
     Navigation,
-    Footer
+    Footer,
+    CustomLink
   },
   created() {
     this.navRoutes = [
